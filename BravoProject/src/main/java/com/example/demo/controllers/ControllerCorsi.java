@@ -23,15 +23,17 @@ public class ControllerCorsi {
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody String addNewUser(@RequestParam String tipo, @RequestParam String attivita,
-			@RequestParam LocalDate data, @RequestParam LocalTime time, @RequestParam String stato, @RequestParam int id_palestra ) {
+			@RequestParam LocalDate data, @RequestParam LocalTime time, @RequestParam String stato,
+			@RequestParam int id_palestra) {
+		
+
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
-		//creo un oggetto corso
+		// creo un oggetto corso
 		Corsi n = new Corsi();
-		
-		
-		//salvo il corso
+
+		// salvo il corso
 		corsiRepository.save(n);
 		return "Saved";
 	}

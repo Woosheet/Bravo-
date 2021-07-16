@@ -5,89 +5,88 @@ import java.time.LocalTime;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-
-
-@SequenceGenerator(name="seqPal", initialValue=1, allocationSize=100)
+@SequenceGenerator(name = "seqPal", initialValue = 1, allocationSize = 100)
 @Entity // This tells Hibernate to make a table out of this class
 public class Palestre {
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seqPal")
-  private int ID_Palestra;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqPal")
+	private int ID_Palestra;
 
-  private String nomePalestra;
-  
-  private String posizionePalestra;
-  
-  private String email;
-  
-  private String password;
-  
-  private String numTelefono;
-  
-  private String info;
+	private String nomePalestra;
 
-public String getNomePalestra() {
-	return nomePalestra;
-}
+	private String posizionePalestra;
 
-public void setNomePalestra(String nomePalestra) {
-	this.nomePalestra = nomePalestra;
-}
+	private String email;
 
-public String getPosizionePalestra() {
-	return posizionePalestra;
-}
+	private String password;
 
-public void setPosizionePalestra(String posizionePalestra) {
-	this.posizionePalestra = posizionePalestra;
-}
+	private String numTelefono;
 
-public String getEmail() {
-	return email;
-}
+	private String info;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn
+	private Set<Corsi> ID_Corso;
 
-public void setEmail(String email) {
-	this.email = email;
-}
+	public String getNomePalestra() {
+		return nomePalestra;
+	}
 
-public String getPassword() {
-	return password;
-}
+	public void setNomePalestra(String nomePalestra) {
+		this.nomePalestra = nomePalestra;
+	}
 
-public void setPassword(String password) {
-	this.password = password;
-}
+	public String getPosizionePalestra() {
+		return posizionePalestra;
+	}
 
-public String getNumTelefono() {
-	return numTelefono;
-}
+	public void setPosizionePalestra(String posizionePalestra) {
+		this.posizionePalestra = posizionePalestra;
+	}
 
-public void setNumTelefono(String numTelefono) {
-	this.numTelefono = numTelefono;
-}
+	public String getEmail() {
+		return email;
+	}
 
-public String getInfo() {
-	return info;
-}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-public void setInfo(String info) {
-	this.info = info;
-}
+	public String getPassword() {
+		return password;
+	}
 
-public int getID_Palestra() {
-	return ID_Palestra;
-}
-  
-  
- 
-  
-  
-  
-  
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getNumTelefono() {
+		return numTelefono;
+	}
+
+	public void setNumTelefono(String numTelefono) {
+		this.numTelefono = numTelefono;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public int getID_Palestra() {
+		return ID_Palestra;
+	}
+
 }

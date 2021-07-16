@@ -11,93 +11,79 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.JoinColumn;
 
-
-
-
-@SequenceGenerator(name="sequenzaT", initialValue=1, allocationSize=100)
+@SequenceGenerator(name = "sequenzaT", initialValue = 1, allocationSize = 100)
 @Entity // This tells Hibernate to make a table out of this class
 public class Trainer {
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sequenzaT")
-  private int ID_Trainer;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenzaT")
+	private int ID_Trainer;
 
+	private String nome;
 
-  private String nome;
+	private String cognome;
 
-  private String cognome;
-  
-  private String email;
-  
-  private String nomeUtente;
-  
-  private String password;
-  
-  private String informazioni;
-  
-  @ManyToMany
-  @JoinTable(
-		  name = "TrainerCorsi", 
-		  joinColumns = @JoinColumn(name = "ID_Trainer"), 
-		  inverseJoinColumns = @JoinColumn(name = "ID_Corso"))
-  Set<Corsi> trainerFreq; 
-  
+	private String email;
 
-public String getNome() {
-	return nome;
-}
+	private String nomeUtente;
 
-public void setNome(String nome) {
-	this.nome = nome;
-}
+	private String password;
 
-public String getCognome() {
-	return cognome;
-}
+	private String informazioni;
 
-public void setCognome(String cognome) {
-	this.cognome = cognome;
-}
+	@ManyToMany
+	@JoinTable(name = "TrainerCorsi", joinColumns = @JoinColumn(name = "ID_Trainer"), inverseJoinColumns = @JoinColumn(name = "ID_Corso"))
+	Set<Corsi> trainerFreq;
 
-public String getEmail() {
-	return email;
-}
+	public String getNome() {
+		return nome;
+	}
 
-public void setEmail(String email) {
-	this.email = email;
-}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-public String getNomeUtente() {
-	return nomeUtente;
-}
+	public String getCognome() {
+		return cognome;
+	}
 
-public void setNomeUtente(String nomeUtente) {
-	this.nomeUtente = nomeUtente;
-}
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
 
-public String getPassword() {
-	return password;
-}
+	public String getEmail() {
+		return email;
+	}
 
-public void setPassword(String password) {
-	this.password = password;
-}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-public int getID_Trainer() {
-	return ID_Trainer;
-}
+	public String getNomeUtente() {
+		return nomeUtente;
+	}
 
-public String getInformazioni() {
-	return informazioni;
-}
+	public void setNomeUtente(String nomeUtente) {
+		this.nomeUtente = nomeUtente;
+	}
 
-public void setInformazioni(String informazioni) {
-	this.informazioni = informazioni;
-}
+	public String getPassword() {
+		return password;
+	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
+	public int getID_Trainer() {
+		return ID_Trainer;
+	}
 
-  
-  
-  
+	public String getInformazioni() {
+		return informazioni;
+	}
+
+	public void setInformazioni(String informazioni) {
+		this.informazioni = informazioni;
+	}
 
 }
