@@ -18,9 +18,7 @@ public class Trainer {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenzaT")
 	private int ID_Trainer;
 
-	private String nome;
-
-	private String cognome;
+	private String anagrafica;
 
 	private String email;
 
@@ -34,20 +32,15 @@ public class Trainer {
 	@JoinTable(name = "TrainerCorsi", joinColumns = @JoinColumn(name = "ID_Trainer"), inverseJoinColumns = @JoinColumn(name = "ID_Corso"))
 	Set<Corsi> trainerFreq;
 
-	public String getNome() {
-		return nome;
+	
+	
+	
+	public String getAnagrafica() {
+		return anagrafica;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
+	public void setAnagrafica(String anagrafica) {
+		this.anagrafica = anagrafica;
 	}
 
 	public String getEmail() {
