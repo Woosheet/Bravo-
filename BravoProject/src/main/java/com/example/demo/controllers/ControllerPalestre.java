@@ -27,6 +27,11 @@ public class ControllerPalestre {
 			@RequestParam String email, @RequestParam String password, @RequestParam String numTelefono,
 			@RequestParam String info) {
 		
+		
+	//	Palestre p = new Palestre(nomePalestra, posizionePalestra,email, password, numTelefono, info);
+	//	palestreRepository.save(p);
+		
+		
 
 		return "Saved";
 	}

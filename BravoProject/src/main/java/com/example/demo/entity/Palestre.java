@@ -28,10 +28,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-
-
-
-
 @SuppressWarnings("serial")
 @Getter
 @Setter
@@ -72,7 +68,7 @@ public class Palestre implements UserDetails {
 	
 
 	public Palestre(String nomePalestra, String posizionePalestra, String email, String password, String numTelefono,
-			String info, Role palestraRole, Boolean locked, Boolean enabled) {
+			String info, Role ruolo) {
 		super();
 		this.nomePalestra = nomePalestra;
 		this.posizionePalestra = posizionePalestra;
@@ -80,9 +76,8 @@ public class Palestre implements UserDetails {
 		this.password = password;
 		this.numTelefono = numTelefono;
 		this.info = info;
-		this.palestraRole = palestraRole;
-		this.locked = locked;
-		this.enabled = enabled;
+		this.palestraRole = ruolo;
+		
 	}
 
 	public String getNomePalestra() {

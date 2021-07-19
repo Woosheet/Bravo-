@@ -31,14 +31,10 @@ public class Corsi {
 
 	private String stato;
 	
-	
-	
 
 	@ManyToMany(mappedBy = "corsiFreq")
 	Set<Utenti> utentiFreq;
 
-	@ManyToMany(mappedBy = "trainerFreq")
-	Set<Trainer> trainerFreq;
 
 	public String getTipo() {
 		return tipo;
