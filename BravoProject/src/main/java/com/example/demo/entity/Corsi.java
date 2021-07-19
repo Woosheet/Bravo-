@@ -21,63 +21,105 @@ public class Corsi {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
 	private int ID_Corso;
 
-	private String tipo;
 
-	private String attivita;
+	private String attivita; //Descrizione del corso
 
-	private LocalDate date;
+	private LocalDate date;	//dove e quando
+	private LocalTime tempo;
 
-	private LocalTime time;
-
-	private String stato;
+	private boolean checkDisponibilita;
+	private int disponibilitaMasssima; //numero persone che partecipanoMax
+	private int partecipanti; //numero persone che partecipano
 	
 
 	@ManyToMany(mappedBy = "corsiFreq")
 	Set<Utenti> utentiFreq;
 
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public String getAttivita() {
 		return attivita;
 	}
+
 
 	public void setAttivita(String attivita) {
 		this.attivita = attivita;
 	}
 
+
 	public LocalDate getDate() {
 		return date;
 	}
+
 
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	public LocalTime getTime() {
-		return time;
+
+	public LocalTime getTempo() {
+		return tempo;
 	}
 
-	public void setTime(LocalTime time) {
-		this.time = time;
+
+	public void setTempo(LocalTime tempo) {
+		this.tempo = tempo;
 	}
 
-	public String getStato() {
-		return stato;
+
+
+	public Set<Utenti> getUtentiFreq() {
+		return utentiFreq;
 	}
 
-	public void setStato(String stato) {
-		this.stato = stato;
+
+	public void setUtentiFreq(Set<Utenti> utentiFreq) {
+		this.utentiFreq = utentiFreq;
 	}
+
 
 	public int getID_Corso() {
 		return ID_Corso;
 	}
+
+
+	public boolean isCheckDisponibilita() {
+		return checkDisponibilita;
+	}
+
+
+	public void setCheckDisponibilita(boolean checkDisponibilita) {
+		this.checkDisponibilita = checkDisponibilita;
+	}
+
+
+	public int getDisponibilitaMasssima() {
+		return disponibilitaMasssima;
+	}
+
+
+	public void setDisponibilitaMasssima(int disponibilitaMasssima) {
+		this.disponibilitaMasssima = disponibilitaMasssima;
+	}
+
+
+	public int getPartecipanti() {
+		return partecipanti;
+	}
+
+
+	public void setPartecipanti(int partecipanti) {
+		this.partecipanti = partecipanti;
+	}
+
+
+	public void setID_Corso(int iD_Corso) {
+		ID_Corso = iD_Corso;
+	}
+
+
+	
+
+
+	
 
 }
