@@ -2,9 +2,13 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,10 +18,29 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-@SequenceGenerator(name = "seqPal", initialValue = 1, allocationSize = 100)
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+
+
+
+
+@SuppressWarnings("serial")
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
 @Entity // This tells Hibernate to make a table out of this class
-public class Palestre {
+public class Palestre implements UserDetails {
 	@Id
+	@SequenceGenerator(name = "seqPal", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqPal")
 	private int ID_Palestra;
 
@@ -33,9 +56,34 @@ public class Palestre {
 
 	private String info;
 	
+	@Enumerated(EnumType.STRING)
+	private Role palestraRole;
+	
+	private Boolean locked;
+	
+	private Boolean enabled;
+	
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn
 	private Set<Corsi> ID_Corso;
+	
+	
+	
+
+	public Palestre(String nomePalestra, String posizionePalestra, String email, String password, String numTelefono,
+			String info, Role palestraRole, Boolean locked, Boolean enabled) {
+		super();
+		this.nomePalestra = nomePalestra;
+		this.posizionePalestra = posizionePalestra;
+		this.email = email;
+		this.password = password;
+		this.numTelefono = numTelefono;
+		this.info = info;
+		this.palestraRole = palestraRole;
+		this.locked = locked;
+		this.enabled = enabled;
+	}
 
 	public String getNomePalestra() {
 		return nomePalestra;
@@ -87,6 +135,67 @@ public class Palestre {
 
 	public int getID_Palestra() {
 		return ID_Palestra;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(palestraRole.name());
+		return Collections.singletonList(authority);
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return nomePalestra;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return !locked;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return enabled;
+	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Role getPalestraRole() {
+		return palestraRole;
+	}
+
+	public void setPalestraRole(Role palestraRole) {
+		this.palestraRole = palestraRole;
 	}
 
 }
