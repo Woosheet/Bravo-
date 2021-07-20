@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.management.AttributeNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class ControllerCorsi {
 	// carichiamo un corso
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody String addCorso(@RequestParam String attivita, @RequestParam LocalTime tempo,
-			@RequestParam LocalDate date, @RequestParam int disponibilitaMassima) {
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam int disponibilitaMassima, @RequestParam int ID_Palestra) {
 
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
@@ -43,10 +44,13 @@ public class ControllerCorsi {
 
 		n.setAttivita(attivita);
 		n.setDate(date);
+		
 		n.setTempo(tempo);
 		n.setDisponibilitaMassima(disponibilitaMassima);
 		n.setCheckDisponibilita(true);
 		n.setPartecipanti(0);
+		
+		n.setIDPalestra(ID_Palestra);
 
 		// salvo il corso
 		corsiRepository.save(n);
@@ -87,8 +91,8 @@ public class ControllerCorsi {
 	@PutMapping(path = "/update")
 	public @ResponseBody String updateUser(@RequestParam Integer id,
 			@RequestParam(name = "attivita", required = false, defaultValue = "default") String attivita,
-			@RequestParam(name = "tempo", required = false, defaultValue = "default") LocalTime tempo,
-			@RequestParam(name = "date", required = false, defaultValue = "default") LocalDate date,
+			@RequestParam(name = "tempo", required = false, defaultValue = "01:00") LocalTime tempo,
+			@RequestParam(name = "date", required = false, defaultValue = "2021-01-01") LocalDate date,
 			@RequestParam(name = "disponibilitaMassima", required = false, defaultValue = "default") String disponibilitaMassima) {
 
 		Optional<Corsi> corso;
@@ -107,14 +111,14 @@ public class ControllerCorsi {
 			}
 			// se ho passato un parametro email, lo imposto, altrimenti se non l'ho passato
 			// imposto email a quello iniziale
-			if (!tempo.equals("default")) {
+			if (!tempo.equals("01:00")) {
 				n.setTempo(tempo);
 			} else {
 				n.setTempo(corso.get().getTempo());
 			}
 			// se ho passato un parametro eta, lo imposto, altrimenti se non l'ho passato
 			// imposto eta a quello iniziale
-			if (!date.equals("default")) {
+			if (!date.equals("")) {
 				n.setDate(date);
 			} else {
 				n.setDate(corso.get().getDate());

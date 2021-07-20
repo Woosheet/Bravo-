@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -59,11 +61,26 @@ public class Palestre implements UserDetails {
 	
 	private Boolean enabled;
 	
-	
+	/*
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn
 	private Set<Corsi> ID_Corso;
 	
+ */
+	@OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_Palestra", referencedColumnName = "ID_Palestra")
+    private List<Corsi> corsi;
+    	
+    public List<Corsi> getCorsi() {
+       	return corsi;
+    }
+
+    public void setCorsi(List<Corsi> corsi) {
+        this.corsi = corsi;
+    }
+    	
+  
+  
 	
 	
 
