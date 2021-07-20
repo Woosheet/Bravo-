@@ -16,7 +16,7 @@ public interface CorsiRepository extends JpaRepository<Corsi, Integer>{
 	 * todo: aggiungi cose
 	 */
 	
-	
+	//ricerca per palestre (i corsi di data palestra)
 	@Query(
 			  value = "SELECT * FROM corsi WHERE id_palestra = :idpalestra ", nativeQuery = true)
 	Iterable<Corsi> findByPalestra(@Param(value="idpalestra")Integer idpalestra);
@@ -29,7 +29,9 @@ public interface CorsiRepository extends JpaRepository<Corsi, Integer>{
 	
 	//ricerca attività per tempo
 	List<Corsi> findByTempo(LocalTime tempo);
-		
+	
+	//ricerca per nome del corno
+	List<Corsi> findByAttivitaContainingIgnoreCase(String attivita);
 		
 	
 }

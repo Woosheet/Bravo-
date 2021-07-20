@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.example.demo.entity.Corsi;
 import com.example.demo.repository.CorsiRepository;
 
@@ -34,7 +33,8 @@ public class ControllerCorsi {
 	// carichiamo un corso
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody String addCorso(@RequestParam String attivita, @RequestParam LocalTime tempo,
-			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam int disponibilitaMassima, @RequestParam int ID_Palestra) {
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+			@RequestParam int disponibilitaMassima, @RequestParam int ID_Palestra) {
 
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
@@ -44,12 +44,12 @@ public class ControllerCorsi {
 
 		n.setAttivita(attivita);
 		n.setDate(date);
-		
+
 		n.setTempo(tempo);
 		n.setDisponibilitaMassima(disponibilitaMassima);
 		n.setCheckDisponibilita(true);
 		n.setPartecipanti(0);
-		
+
 		n.setIDPalestra(ID_Palestra);
 
 		// salvo il corso
@@ -57,13 +57,14 @@ public class ControllerCorsi {
 		return "Saved";
 	}
 
+	//metodo inutile
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Corsi> getAllCorsi() {
 		// This returns a JSON or XML with the users
 		return corsiRepository.findAll();
 	}
 
-	// ricerca per palestra
+	// ricerca per palestra || i miei corsi
 	@GetMapping(path = "/search/palestra")
 	public ResponseEntity<Iterable<Corsi>> findByPalesta(@RequestParam Integer IDPalestra) {
 		return new ResponseEntity<Iterable<Corsi>>(corsiRepository.findByPalestra(IDPalestra), HttpStatus.OK);
@@ -81,68 +82,40 @@ public class ControllerCorsi {
 		return new ResponseEntity<List<Corsi>>(corsiRepository.findByDate(date), HttpStatus.OK);
 	}
 
-	// ricerca per tepo
+	// ricerca per tempo
 	@GetMapping(path = "/search/time")
 	public ResponseEntity<List<Corsi>> findByTempo(@RequestParam LocalTime time) {
 		return new ResponseEntity<List<Corsi>>(corsiRepository.findByTempo(time), HttpStatus.OK);
 	}
 	
-	//update dei dati
-	@PutMapping(path = "/update")
-	public @ResponseBody String updateUser(@RequestParam Integer id,
-			@RequestParam(name = "attivita", required = false, defaultValue = "default") String attivita,
-			@RequestParam(name = "tempo", required = false, defaultValue = "01:00") LocalTime tempo,
-			@RequestParam(name = "date", required = false, defaultValue = "2021-01-01") LocalDate date,
-			@RequestParam(name = "disponibilitaMassima", required = false, defaultValue = "default") String disponibilitaMassima) {
-
-		Optional<Corsi> corso;
-		corso = corsiRepository.findById(id);
-
-		// se l'user esiste
-		if (corso.isPresent()) {
-			Corsi n = new Corsi();
-
-			// se ho passato un parametro name, lo imposto, altrimenti se non l'ho passato
-			// imposto name a quello iniziale
-			if (!attivita.equals("default")) {
-				n.setAttivita(attivita);
-			} else {
-				n.setAttivita(corso.get().getAttivita());
-			}
-			// se ho passato un parametro email, lo imposto, altrimenti se non l'ho passato
-			// imposto email a quello iniziale
-			if (!tempo.equals("01:00")) {
-				n.setTempo(tempo);
-			} else {
-				n.setTempo(corso.get().getTempo());
-			}
-			// se ho passato un parametro eta, lo imposto, altrimenti se non l'ho passato
-			// imposto eta a quello iniziale
-			if (!date.equals("")) {
-				n.setDate(date);
-			} else {
-				n.setDate(corso.get().getDate());
-			}
-			//modifica sta roba della disponibilita massima per piacere
-			if (!disponibilitaMassima.equals("default")) {
-				n.setDisponibilitaMassima(Integer.parseInt(disponibilitaMassima));
-			} else {
-				n.setDisponibilitaMassima(corso.get().getDisponibilitaMassima());
-			}
-
-			// setto l'id
-			n.setID_Corso(id);
-			// update
-			corsiRepository.save(n);
-			return "User Aggiornato.";
-		} else {
-			return "Non esiste questo user.";
-		}
-
+	//ricerca per nome attivita
+	@GetMapping(path = "/search/attivita")
+	public ResponseEntity<List<Corsi>>findByAttivitaContainingIgnoreCase(@RequestParam String attivita){
+		return new ResponseEntity<List<Corsi>>(corsiRepository.findByAttivitaContainingIgnoreCase(attivita), HttpStatus.OK);
+	
 	}
 	
-	
-	@DeleteMapping(path="delete")
+	// update dei dati
+	@PutMapping(path = "/update")
+	public @ResponseBody String updateUser(@RequestParam Integer id, @RequestParam String attivita,
+			@RequestParam LocalTime tempo, @RequestParam LocalDate date, @RequestParam int disponibilitaMassima)
+			throws AttributeNotFoundException {
+
+		Corsi corso = corsiRepository.findById(id)
+				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + id));
+
+		corso.setAttivita(attivita);
+		corso.setDate(date);
+		corso.setTempo(tempo);
+		corso.setDisponibilitaMassima(disponibilitaMassima);
+		corso.setID_Corso(id);
+
+		corsiRepository.save(corso);
+		return "Corso aggiornato";
+
+	}
+
+	@DeleteMapping(path = "delete")
 	public @ResponseBody String deleteByIdCorso(@RequestParam int id) throws AttributeNotFoundException {
 		corsiRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Utente non Esiste: " + id));
 
@@ -150,5 +123,5 @@ public class ControllerCorsi {
 
 		return "Corso eliminato";
 	}
-	
+
 }
