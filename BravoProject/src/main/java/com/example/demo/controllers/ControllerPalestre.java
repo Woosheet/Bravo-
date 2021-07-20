@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.Palestre;
+import com.example.demo.entity.Role;
 import com.example.demo.repository.PalestreRepository;
 
 @Controller // This means that this class is a Controller
@@ -28,8 +29,8 @@ public class ControllerPalestre {
 			@RequestParam String info) {
 		
 		
-	//	Palestre p = new Palestre(nomePalestra, posizionePalestra,email, password, numTelefono, info);
-	//	palestreRepository.save(p);
+	Palestre p = new Palestre(nomePalestra, posizionePalestra,email, password, numTelefono, info, Role.USER);
+	palestreRepository.save(p);
 		
 		
 

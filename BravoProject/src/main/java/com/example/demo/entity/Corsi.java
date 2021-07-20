@@ -23,12 +23,10 @@ public class Corsi {
 
 
 	private String attivita; //Descrizione del corso
-
 	private LocalDate date;	//dove e quando
 	private LocalTime tempo;
-
 	private boolean checkDisponibilita;
-	private int disponibilitaMasssima; //numero persone che partecipanoMax
+	private int disponibilitaMassima; //numero persone che partecipanoMax
 	private int partecipanti; //numero persone che partecipano
 	
 
@@ -92,13 +90,13 @@ public class Corsi {
 	}
 
 
-	public int getDisponibilitaMasssima() {
-		return disponibilitaMasssima;
+	public int getDisponibilitaMassima() {
+		return disponibilitaMassima;
 	}
 
 
-	public void setDisponibilitaMasssima(int disponibilitaMasssima) {
-		this.disponibilitaMasssima = disponibilitaMasssima;
+	public void setDisponibilitaMassima(int disponibilitaMasssima) {
+		this.disponibilitaMassima = disponibilitaMasssima;
 	}
 
 

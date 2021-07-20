@@ -5,10 +5,13 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.AttributeNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.accessingdatamysql.Persona;
+
 import com.example.demo.entity.Corsi;
 import com.example.demo.repository.CorsiRepository;
 
@@ -29,7 +32,7 @@ public class ControllerCorsi {
 
 	// carichiamo un corso
 	@PostMapping(path = "/add") // Map ONLY POST Requests
-	public @ResponseBody String addNewUser(@RequestParam String attivita, @RequestParam LocalTime tempo,
+	public @ResponseBody String addCorso(@RequestParam String attivita, @RequestParam LocalTime tempo,
 			@RequestParam LocalDate date, @RequestParam int disponibilitaMassima) {
 
 		// @ResponseBody means the returned String is the response, not a view name
@@ -41,7 +44,7 @@ public class ControllerCorsi {
 		n.setAttivita(attivita);
 		n.setDate(date);
 		n.setTempo(tempo);
-		n.setDisponibilitaMasssima(disponibilitaMassima);
+		n.setDisponibilitaMassima(disponibilitaMassima);
 		n.setCheckDisponibilita(true);
 		n.setPartecipanti(0);
 
@@ -51,15 +54,15 @@ public class ControllerCorsi {
 	}
 
 	@GetMapping(path = "/all")
-	public @ResponseBody Iterable<Corsi> getAllUsers() {
+	public @ResponseBody Iterable<Corsi> getAllCorsi() {
 		// This returns a JSON or XML with the users
 		return corsiRepository.findAll();
 	}
 
 	// ricerca per palestra
 	@GetMapping(path = "/search/palestra")
-	public ResponseEntity<List<Corsi>> findByID_Palesta(@RequestParam int ID_Palestra) {
-		return new ResponseEntity<List<Corsi>>(corsiRepository.findByIDPalestra(ID_Palestra), HttpStatus.OK);
+	public ResponseEntity<Iterable<Corsi>> findByPalesta(@RequestParam Integer IDPalestra) {
+		return new ResponseEntity<Iterable<Corsi>>(corsiRepository.findByPalestra(IDPalestra), HttpStatus.OK);
 	}
 
 	// ricerca per palestra
@@ -86,7 +89,7 @@ public class ControllerCorsi {
 			@RequestParam(name = "attivita", required = false, defaultValue = "default") String attivita,
 			@RequestParam(name = "tempo", required = false, defaultValue = "default") LocalTime tempo,
 			@RequestParam(name = "date", required = false, defaultValue = "default") LocalDate date,
-			@RequestParam(name = "disponibilitaMassima", required = false, defaultValue = "-1") int disponibilitaMassima) {
+			@RequestParam(name = "disponibilitaMassima", required = false, defaultValue = "default") String disponibilitaMassima) {
 
 		Optional<Corsi> corso;
 		corso = corsiRepository.findById(id);
@@ -117,10 +120,10 @@ public class ControllerCorsi {
 				n.setDate(corso.get().getDate());
 			}
 			//modifica sta roba della disponibilita massima per piacere
-			if () {
-				n.setDisponibilitaMasssima(disponibilitaMassima);
+			if (!disponibilitaMassima.equals("default")) {
+				n.setDisponibilitaMassima(Integer.parseInt(disponibilitaMassima));
 			} else {
-				n.setDisponibilitaMasssima(corso.get().getDisponibilitaMasssima());
+				n.setDisponibilitaMassima(corso.get().getDisponibilitaMassima());
 			}
 
 			// setto l'id
@@ -132,6 +135,16 @@ public class ControllerCorsi {
 			return "Non esiste questo user.";
 		}
 
+	}
+	
+	
+	@DeleteMapping(path="delete")
+	public @ResponseBody String deleteByIdCorso(@RequestParam int id) throws AttributeNotFoundException {
+		corsiRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Utente non Esiste: " + id));
+
+		corsiRepository.deleteById(id);
+
+		return "Corso eliminato";
 	}
 	
 }

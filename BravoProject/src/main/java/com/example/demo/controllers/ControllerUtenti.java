@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ public class ControllerUtenti {
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody String addNewUser(@RequestParam String anagrafica, @RequestParam String email,
-			@RequestParam String nomeUtente, @RequestParam String password, @RequestParam String numTelefono) {
+			@RequestParam String nomeUtente, @RequestParam String password, @RequestParam(required = false) String numTelefono) {
 		
 
 		return "Saved";
@@ -32,5 +34,16 @@ public class ControllerUtenti {
 		// This returns a JSON or XML with the users
 		return utentiRepository.findAll();
 	}
-
+	
+	@GetMapping(path = "/searchUserById/{id}")
+	public @ResponseBody Optional<Utenti> ricercaUtente(@RequestParam int id) {
+		
+		return utentiRepository.findById(id);
+	}
+	
+	
+	//@PutMapping(path = "/disableAccount")
+	
+	
+	
 }
