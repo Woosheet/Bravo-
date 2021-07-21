@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.entity.Role;
 import com.example.demo.entity.Utenti;
 import com.example.demo.repository.UtentiRepository;
 
@@ -24,8 +25,17 @@ public class ControllerUtenti {
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody String addNewUser(@RequestParam String anagrafica, @RequestParam String email,
 			@RequestParam String nomeUtente, @RequestParam String password, @RequestParam(required = false) String numTelefono) {
+		Utenti u = new Utenti();
 		
-
+		u.setAnagrafica(anagrafica);
+		u.setEmail(email);
+		u.setNomeUtente(nomeUtente);
+		u.setPassword(password);
+		u.setNumTelefono(numTelefono);
+		u.setUtentiRole(Role.USER);
+		u.setEnabled(true);
+		u.setLocked(false);
+		utentiRepository.save(u);
 		return "Saved";
 	}
 

@@ -10,7 +10,7 @@ import com.example.demo.entity.UtentiCorsi;
 public interface UtentiCorsiRepository extends JpaRepository<UtentiCorsi, Integer> {
 	
 	List<UtentiCorsi> findByIDUtente(Integer IDUtente);
-	List<UtentiCorsi> findByIDCorsi(Integer IDCorsi);
+	List<UtentiCorsi> findByIDCorso(Integer IDCorso);
 	
 
 }

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="utenti_corsi")
+//@Table(name="utenti_corsi")
 public class UtentiCorsi {
 
 	public UtentiCorsi() {
@@ -31,16 +32,27 @@ public class UtentiCorsi {
 		IDUtentiCorsi = iDUtentiCorsi;
 	}
 
+	//many to one
+	@Column(name = "ID_Utente")
+	private Integer IDUtente;
+	
+	//many to one
+	@Column(name = "ID_Corso")
+	   private Integer IDCorso;
+
+
+	
+	/*
 	@ManyToOne
-	@MapsId("id_utente")
+	@MapsId("ID_Utente")
 	@JoinColumn(name = "ID_Utente")
 	private Integer IDUtente;
 
 	@ManyToOne
-	@MapsId("id_corso")
+	@MapsId("ID_Corso")
 	@JoinColumn(name = "ID_Corso")
 	private Integer IDCorso;
-
+	 */
 	public Integer getIDUtente() {
 		return IDUtente;
 	}

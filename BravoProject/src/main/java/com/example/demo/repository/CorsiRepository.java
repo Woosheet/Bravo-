@@ -21,9 +21,6 @@ public interface CorsiRepository extends JpaRepository<Corsi, Integer>{
 			  value = "SELECT * FROM corsi WHERE id_palestra = :idpalestra ", nativeQuery = true)
 	Iterable<Corsi> findByPalestra(@Param(value="idpalestra")Integer idpalestra);
 	
-	//ricerca attività per disponibilita
-	List<Corsi> findByCheckDisponibilita(boolean disp);
-	
 	//ricerca attività per data
 	List<Corsi> findByDate(LocalDate date);
 	

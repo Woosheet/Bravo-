@@ -2,8 +2,10 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 100)
+@SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 1)
 @Entity // This tells Hibernate to make a table out of this class
 public class Corsi {
 	@Id
@@ -55,7 +57,9 @@ public class Corsi {
         this.ID_Palestra = ID_Palestra;
     }
 	  
-	  
+	@OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_Corso", referencedColumnName = "ID_Corso")
+    private List<UtentiCorsi> utentiCorsi;
 
 
 	@ManyToMany(mappedBy = "corsiFreq")

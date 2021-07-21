@@ -40,7 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/Corsi/search/palestra",
 				"/Corsi/update",
 				"/Corsi/search/attivita",
-				"/Corsi/search/disponibilita",
 				"/Corsi/search/date",
 				"/Corsi/search/time",
 				"/Corsi/delete",

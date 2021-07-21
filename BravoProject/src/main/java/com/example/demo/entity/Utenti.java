@@ -2,8 +2,10 @@ package com.example.demo.entity;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +28,7 @@ import lombok.Setter;
 
 import javax.persistence.JoinColumn;
 
-@SequenceGenerator(name = "sequenzaU", initialValue = 1, allocationSize = 100)
+@SequenceGenerator(name = "sequenzaU", initialValue = 1, allocationSize = 1)
 @SuppressWarnings("serial")
 @Getter
 @Setter
@@ -45,6 +48,8 @@ public class Utenti implements UserDetails{
 
 	private String password;
 	
+	private String numTelefono;
+	
 	@Enumerated(EnumType.STRING)
 	private Role utentiRole;
 	
@@ -52,6 +57,9 @@ public class Utenti implements UserDetails{
 	
 	private Boolean enabled;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_Utente", referencedColumnName = "ID_Utente")
+    private List<UtentiCorsi> utentiCorsi;
 
 	@ManyToMany
 	@JoinTable(name = "UtentiCorsi", joinColumns = @JoinColumn(name = "ID_Utente"), inverseJoinColumns = @JoinColumn(name = "ID_Corso"))
@@ -127,6 +135,38 @@ public class Utenti implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return enabled;
+	}
+
+	public Role getUtentiRole() {
+		return utentiRole;
+	}
+
+	public void setUtentiRole(Role utentiRole) {
+		this.utentiRole = utentiRole;
+	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getNumTelefono() {
+		return numTelefono;
+	}
+
+	public void setNumTelefono(String numTelefono) {
+		this.numTelefono = numTelefono;
 	}
 
 }

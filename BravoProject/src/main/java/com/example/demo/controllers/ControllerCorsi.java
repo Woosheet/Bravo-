@@ -67,12 +67,6 @@ public class ControllerCorsi {
 		return new ResponseEntity<Iterable<Corsi>>(corsiRepository.findByPalestra(IDPalestra), HttpStatus.OK);
 	}
 
-	// ricerca per palestra
-	@GetMapping(path = "/search/disponibilita")
-	public ResponseEntity<List<Corsi>> findByCheckDisponibilita(@RequestParam boolean disponibilita) {
-		return new ResponseEntity<List<Corsi>>(corsiRepository.findByCheckDisponibilita(disponibilita), HttpStatus.OK);
-	}
-
 	// ricerca per data
 	@GetMapping(path = "/search/date")
 	public ResponseEntity<List<Corsi>> findByDate(@RequestParam LocalDate date) {

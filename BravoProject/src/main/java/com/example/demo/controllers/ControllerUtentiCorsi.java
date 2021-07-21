@@ -20,6 +20,8 @@ public class ControllerUtentiCorsi {
 
 	@Autowired
 	private UtentiCorsiRepository utentiCorsiRepository;
+	
+	@Autowired
 	private CorsiRepository corsiRepository;
 
 	// Registrazione utente X al Corso X + controllo del utente nel caso sia
@@ -52,7 +54,7 @@ public class ControllerUtentiCorsi {
 	// Controllo se Utente è già registrato al corso
 	public boolean giaRegistrato(Integer IDCorso, Integer IDUtente) {
 
-		List<UtentiCorsi> listaPartecipazione = utentiCorsiRepository.findByIDCorsi(IDCorso);
+		List<UtentiCorsi> listaPartecipazione = utentiCorsiRepository.findByIDCorso(IDCorso);
 		for (int i = 0; i < listaPartecipazione.size(); i++) {
 			if (listaPartecipazione.get(i).getIDUtente() == IDUtente) {
 				return false;
