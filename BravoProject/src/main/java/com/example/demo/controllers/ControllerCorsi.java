@@ -69,7 +69,7 @@ public class ControllerCorsi {
 
 	// ricerca per data
 	@GetMapping(path = "/search/date")
-	public ResponseEntity<List<Corsi>> findByDate(@RequestParam LocalDate date) {
+	public ResponseEntity<List<Corsi>> findByDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 		return new ResponseEntity<List<Corsi>>(corsiRepository.findByDate(date), HttpStatus.OK);
 	}
 
@@ -89,7 +89,7 @@ public class ControllerCorsi {
 	// update dei dati
 	@PutMapping(path = "/update")
 	public @ResponseBody String updateUser(@RequestParam Integer id, @RequestParam String attivita,
-			@RequestParam LocalTime tempo, @RequestParam LocalDate date, @RequestParam int disponibilitaMassima)
+			@RequestParam LocalTime tempo, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam int disponibilitaMassima)
 			throws AttributeNotFoundException {
 
 		Corsi corso = corsiRepository.findById(id)
@@ -106,7 +106,7 @@ public class ControllerCorsi {
 
 	}
 
-	@DeleteMapping(path = "delete")
+	@DeleteMapping(path = "/delete")
 	public @ResponseBody String deleteByIdCorso(@RequestParam int id) throws AttributeNotFoundException {
 		corsiRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Utente non Esiste: " + id));
 

@@ -61,10 +61,10 @@ public class Corsi {
     @JoinColumn(name = "ID_Corso", referencedColumnName = "ID_Corso")
     private List<UtentiCorsi> utentiCorsi;
 
-
+/*
 	@ManyToMany(mappedBy = "corsiFreq")
 	Set<Utenti> utentiFreq;
-
+*/
 
 	public String getAttivita() {
 		return attivita;
@@ -96,7 +96,7 @@ public class Corsi {
 	}
 
 
-
+/*
 	public Set<Utenti> getUtentiFreq() {
 		return utentiFreq;
 	}
@@ -105,7 +105,7 @@ public class Corsi {
 	public void setUtentiFreq(Set<Utenti> utentiFreq) {
 		this.utentiFreq = utentiFreq;
 	}
-
+*/
 
 	public int getID_Corso() {
 		return ID_Corso;

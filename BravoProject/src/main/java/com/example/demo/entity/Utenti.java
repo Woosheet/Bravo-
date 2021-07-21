@@ -61,9 +61,11 @@ public class Utenti implements UserDetails{
     @JoinColumn(name = "ID_Utente", referencedColumnName = "ID_Utente")
     private List<UtentiCorsi> utentiCorsi;
 
+	/*
 	@ManyToMany
 	@JoinTable(name = "UtentiCorsi", joinColumns = @JoinColumn(name = "ID_Utente"), inverseJoinColumns = @JoinColumn(name = "ID_Corso"))
 	Set<Corsi> corsiFreq;
+	*/
 
 	public String getAnagrafica() {
 		return anagrafica;

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -24,15 +25,23 @@ public class Abbonamenti {
 	private Boolean semestrale;
 	private Boolean annuale;
 
-	private LocalDateTime dataInizio;
+	private LocalDate dataInizio;
 	
-	private LocalDateTime dataFine;
+	private LocalDate dataFine;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_Utente", referencedColumnName = "ID_Utente")
-    private Utenti utente;
+    private Integer ID_Utente;
 	
 	
+
+	public Integer getID_Utente() {
+		return ID_Utente;
+	}
+
+	public void setID_Utente(Integer iD_Utente) {
+		ID_Utente = iD_Utente;
+	}
 
 	public Boolean getMensile() {
 		return mensile;
@@ -58,19 +67,19 @@ public class Abbonamenti {
 		this.annuale = annuale;
 	}
 
-	public LocalDateTime getDataInizio() {
+	public LocalDate getDataInizio() {
 		return dataInizio;
 	}
 
-	public void setDataInizio(LocalDateTime dataInizio) {
+	public void setDataInizio(LocalDate dataInizio) {
 		this.dataInizio = dataInizio;
 	}
 	
-	public LocalDateTime getDataFine() {
+	public LocalDate getDataFine() {
 		return dataFine;
 	}
 
-	public void setDataFine(LocalDateTime dataFine) {
+	public void setDataFine(LocalDate dataFine) {
 		this.dataFine = dataFine;
 	}
 
