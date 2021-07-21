@@ -44,12 +44,9 @@ public class ControllerCorsi {
 
 		n.setAttivita(attivita);
 		n.setDate(date);
-
 		n.setTempo(tempo);
 		n.setDisponibilitaMassima(disponibilitaMassima);
-		n.setCheckDisponibilita(true);
 		n.setPartecipanti(0);
-
 		n.setIDPalestra(ID_Palestra);
 
 		// salvo il corso

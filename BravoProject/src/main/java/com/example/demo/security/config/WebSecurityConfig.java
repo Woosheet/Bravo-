@@ -31,12 +31,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/Palestre/Registration"
-				,"/Palestre/add",
+		http.csrf().disable().authorizeRequests().antMatchers(
+				"/Palestre/Registration",
+				"/Palestre/add",
+				"/Palestre/all", 
 				"/Corsi/add",
+				"/Corsi/all", 
 				"/Corsi/search/palestra",
 				"/Corsi/update",
-				"/Corsi/search/attivita").permitAll().anyRequest()
+				"/Corsi/search/attivita",
+				"/Corsi/search/disponibilita",
+				"/Corsi/search/date",
+				"/Corsi/search/time",
+				"/Corsi/delete",
+				"/Utenti/add",
+				"/Utenti/all",
+				"/Utenti/searchUserById/{id}",
+				"/partecipazione/addPartecipazione",
+				"/partecipazione/deletePartecipazione"
+				).permitAll().anyRequest()
 				.authenticated().and().formLogin(); 
 	//	http.authorizeRequests().antMatchers("/**").permitAll();
 	}

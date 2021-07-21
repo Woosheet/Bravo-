@@ -39,7 +39,6 @@ public class Corsi {
 	@DateTimeFormat(style = "HH:mm")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
 	private LocalTime tempo;
-	private boolean checkDisponibilita;
 	private int disponibilitaMassima; //numero persone che partecipanoMax
 	private int partecipanti; //numero persone che partecipano
 	
@@ -107,17 +106,6 @@ public class Corsi {
 	public int getID_Corso() {
 		return ID_Corso;
 	}
-
-
-	public boolean isCheckDisponibilita() {
-		return checkDisponibilita;
-	}
-
-
-	public void setCheckDisponibilita(boolean checkDisponibilita) {
-		this.checkDisponibilita = checkDisponibilita;
-	}
-
 
 	public int getDisponibilitaMassima() {
 		return disponibilitaMassima;
