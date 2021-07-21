@@ -34,7 +34,7 @@ public class ControllerAbbonamenti {
 	private UtentiRepository utentiRepository;
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
-	public @ResponseBody ResponseEntity<Object> addNewUser(@RequestParam int periodoAbbonamento, @RequestParam int ID_Utente) throws AttributeNotFoundException {
+	public ResponseEntity<Object> addNewUser(@RequestParam int periodoAbbonamento, @RequestParam int ID_Utente) throws AttributeNotFoundException {
 		
 
 		// creo un oggetto abbonamento
@@ -78,5 +78,13 @@ public class ControllerAbbonamenti {
 	}
 	
 	//Abbonamento dell'utente
-
+	@GetMapping(path = "/abbonamentoUtente")
+	public ResponseEntity<Object> ricercaAbbonamentoUtente( @RequestParam int ID_Utente) throws AttributeNotFoundException {
+		// This returns a JSON or XML with the users
+		Utenti u = utentiRepository.findById(ID_Utente)
+				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + ID_Utente));
+		
+		return ResponseHandler.generateResponse("Abbonamento dell'utente selezionato:", HttpStatus.OK, abbonamentiRepository.findByUtente(u));
+	}
+	
 }
