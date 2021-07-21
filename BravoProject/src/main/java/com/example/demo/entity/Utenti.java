@@ -28,7 +28,7 @@ import lombok.Setter;
 
 import javax.persistence.JoinColumn;
 
-@SequenceGenerator(name = "sequenzaU", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "IndiceUtenti", initialValue = 1, allocationSize = 1)
 @SuppressWarnings("serial")
 @Getter
 @Setter
@@ -37,7 +37,7 @@ import javax.persistence.JoinColumn;
 @Entity // This tells Hibernate to make a table out of this class
 public class Utenti implements UserDetails{
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenzaU")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceUtenti")
 	private int ID_Utente;
 
 	private String anagrafica;
@@ -51,7 +51,7 @@ public class Utenti implements UserDetails{
 	private String numTelefono;
 	
 	@Enumerated(EnumType.STRING)
-	private Role utentiRole;
+	private Role utentiRole = Role.USER;
 	
 	private Boolean locked;
 	

@@ -29,7 +29,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @SuppressWarnings("serial")
 @Getter
 @Setter
@@ -38,8 +37,8 @@ import lombok.Setter;
 @Entity // This tells Hibernate to make a table out of this class
 public class Palestre implements UserDetails {
 	@Id
-	@SequenceGenerator(name = "seqPal", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqPal")
+	@SequenceGenerator(name = "IndicePalestra", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndicePalestra")
 	private int ID_Palestra;
 
 	private String nomePalestra;
@@ -53,39 +52,31 @@ public class Palestre implements UserDetails {
 	private String numTelefono;
 
 	private String info;
-	
-	@Enumerated(EnumType.STRING)
-	private Role palestraRole;
-	
-	private Boolean locked;
-	
-	private Boolean enabled;
-	
-	/*
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn
-	private Set<Corsi> ID_Corso;
-	
- */
-	@OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_Palestra", referencedColumnName = "ID_Palestra")
-    private List<Corsi> corsi;
-    	
-    public List<Corsi> getCorsi() {
-       	return corsi;
-    }
 
-    public void setCorsi(List<Corsi> corsi) {
-        this.corsi = corsi;
-    }
-    	
-  
-  
-	
-	
+	private Boolean locked;
+
+	private Boolean enabled;
+
+	/*
+	 * @OneToMany(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinColumn private Set<Corsi> ID_Corso;
+	 * 
+	 */
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_Palestra", referencedColumnName = "ID_Palestra")
+	private List<Corsi> corsi;
+
+	public List<Corsi> getCorsi() {
+		return corsi;
+	}
+
+	public void setCorsi(List<Corsi> corsi) {
+		this.corsi = corsi;
+	}
 
 	public Palestre(String nomePalestra, String posizionePalestra, String email, String password, String numTelefono,
-			String info, Role ruolo) {
+			String info) {
 		super();
 		this.nomePalestra = nomePalestra;
 		this.posizionePalestra = posizionePalestra;
@@ -93,8 +84,6 @@ public class Palestre implements UserDetails {
 		this.password = password;
 		this.numTelefono = numTelefono;
 		this.info = info;
-		this.palestraRole = ruolo;
-		
 	}
 
 	public String getNomePalestra() {
@@ -149,13 +138,7 @@ public class Palestre implements UserDetails {
 		return ID_Palestra;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(palestraRole.name());
-		return Collections.singletonList(authority);
-	}
-
+	
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
@@ -202,12 +185,10 @@ public class Palestre implements UserDetails {
 		this.enabled = enabled;
 	}
 
-	public Role getPalestraRole() {
-		return palestraRole;
-	}
-
-	public void setPalestraRole(Role palestraRole) {
-		this.palestraRole = palestraRole;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

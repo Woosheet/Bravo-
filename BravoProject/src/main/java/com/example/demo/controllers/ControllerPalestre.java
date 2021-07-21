@@ -29,7 +29,7 @@ public class ControllerPalestre {
 			@RequestParam String info) {
 		
 		
-	Palestre p = new Palestre(nomePalestra, posizionePalestra,email, password, numTelefono, info, Role.USER);
+	Palestre p = new Palestre(nomePalestra, posizionePalestra,email, password, numTelefono, info);
 	palestreRepository.save(p);
 		
 		

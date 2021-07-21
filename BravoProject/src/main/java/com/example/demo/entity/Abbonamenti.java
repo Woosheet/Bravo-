@@ -13,11 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
-@SequenceGenerator(name = "seqAbbonamenti", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "IndiceAbbonamenti", initialValue = 1, allocationSize = 1)
 @Entity // This tells Hibernate to make a table out of this class
 public class Abbonamenti {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqAbbonamenti")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceAbbonamenti")
 	private int ID_Abbonamento;
 
 	private Boolean mensile;

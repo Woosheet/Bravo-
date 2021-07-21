@@ -20,8 +20,8 @@ public class UtentiCorsi {
 	}
 
 	@Id
-	@SequenceGenerator(name = "seqUtentiCorsi",initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqUtentiCorsi")
+	@SequenceGenerator(name = "IndiceUtentiCorsi",initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceUtentiCorsi")
 	private int IDUtentiCorsi;
 	
 	public int getIDUtentiCorsi() {

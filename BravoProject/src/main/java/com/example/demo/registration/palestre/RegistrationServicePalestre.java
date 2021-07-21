@@ -26,7 +26,7 @@ public class RegistrationServicePalestre {
 		}
 
 		return palestreService.signUpPalestre(new Palestre(request.getNomePalestra(), request.getPosizionePalestra(),
-				request.getEmail(), request.getPassword(), request.getNumTelefono(), request.getInfo(), Role.USER)
+				request.getEmail(), request.getPassword(), request.getNumTelefono(), request.getInfo())
 
 		);
 	}

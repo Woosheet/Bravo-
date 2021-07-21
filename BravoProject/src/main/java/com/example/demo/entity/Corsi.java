@@ -23,11 +23,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "IndiceCorsi", initialValue = 1, allocationSize = 1)
 @Entity // This tells Hibernate to make a table out of this class
 public class Corsi {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceCorsi")
 	private int ID_Corso;
 
 

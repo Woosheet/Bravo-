@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +24,24 @@ public class ControllerUtenti {
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody String addNewUser(@RequestParam String anagrafica, @RequestParam String email,
-			@RequestParam String nomeUtente, @RequestParam String password, @RequestParam(required = false) String numTelefono) {
+			@RequestParam String nomeUtente, @RequestParam String password,
+			@RequestParam(required = false) String numTelefono) {
 		Utenti u = new Utenti();
-		
-		u.setAnagrafica(anagrafica);
-		u.setEmail(email);
-		u.setNomeUtente(nomeUtente);
-		u.setPassword(password);
-		u.setNumTelefono(numTelefono);
-		u.setUtentiRole(Role.USER);
-		u.setEnabled(true);
-		u.setLocked(false);
-		utentiRepository.save(u);
-		return "Saved";
+
+		if (controlloMail(email) || controlloNomeUtente(nomeUtente)) {
+			return "Nome utente o mail già esistenti";
+		} else {
+			u.setAnagrafica(anagrafica);
+			u.setEmail(email);
+			u.setNomeUtente(nomeUtente);
+			u.setPassword(password);
+			u.setNumTelefono(numTelefono);
+			u.setUtentiRole(Role.USER);
+			u.setEnabled(true);
+			u.setLocked(false);
+			utentiRepository.save(u);
+			return "Saved";
+		}
 	}
 
 	@GetMapping(path = "/all")
@@ -44,16 +49,25 @@ public class ControllerUtenti {
 		// This returns a JSON or XML with the users
 		return utentiRepository.findAll();
 	}
-	
+
 	@GetMapping(path = "/searchUserById/{id}")
 	public @ResponseBody Optional<Utenti> ricercaUtente(@RequestParam int id) {
-		
+
 		return utentiRepository.findById(id);
 	}
-	
-	
-	//@PutMapping(path = "/disableAccount")
-	
-	
-	
+
+	// Implementare Ricerca per email e per nomeUtente
+
+	public boolean controlloMail(String email) {
+		Optional<Utenti> listaUtenti = utentiRepository.findByEmail(email);
+		return listaUtenti.isPresent();
+	}
+
+	public boolean controlloNomeUtente(String nomeUtente) {
+		Optional<Utenti> listaUtenti = utentiRepository.findByNomeUtente(nomeUtente);
+		return listaUtenti.isPresent();
+	}
+
+	// @PutMapping(path = "/disableAccount")
+
 }
