@@ -47,7 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/Utenti/all",
 				"/Utenti/searchUserById/{id}",
 				"/partecipazione/addPartecipazione",
-				"/partecipazione/deletePartecipazione"
+				"/partecipazione/deletePartecipazione",
+				"/Abbonamenti/add"
 				).permitAll().anyRequest()
 				.authenticated().and().formLogin(); 
 	//	http.authorizeRequests().antMatchers("/**").permitAll();

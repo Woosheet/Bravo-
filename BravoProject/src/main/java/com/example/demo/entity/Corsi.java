@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -45,26 +46,27 @@ public class Corsi {
 	private int partecipanti; //numero persone che partecipano
 	
 
-	//many to one
-	@Column(name = "ID_Palestra")
-   	private Integer ID_Palestra;
+	@ManyToOne( cascade = CascadeType.ALL)
+	 @JoinColumn(name = "ID_Palestra", referencedColumnName = "ID_Palestra")
+   	private Palestre palestra;
 
-    public Integer getIDPalestra() {
-        return ID_Palestra;
-    }
-
-    public void setIDPalestra(Integer ID_Palestra) {
-        this.ID_Palestra = ID_Palestra;
-    }
+   
 	  
-	@OneToMany(cascade = CascadeType.ALL)
+	public Palestre getPalestra() {
+		return palestra;
+	}
+
+
+	public void setPalestra(Palestre palestra) {
+		this.palestra = palestra;
+	}
+
+
+	@OneToMany(targetEntity=UtentiCorsi.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_Corso", referencedColumnName = "ID_Corso")
     private List<UtentiCorsi> utentiCorsi;
 
-/*
-	@ManyToMany(mappedBy = "corsiFreq")
-	Set<Utenti> utentiFreq;
-*/
+
 
 	public String getAttivita() {
 		return attivita;
@@ -96,16 +98,6 @@ public class Corsi {
 	}
 
 
-/*
-	public Set<Utenti> getUtentiFreq() {
-		return utentiFreq;
-	}
-
-
-	public void setUtentiFreq(Set<Utenti> utentiFreq) {
-		this.utentiFreq = utentiFreq;
-	}
-*/
 
 	public int getID_Corso() {
 		return ID_Corso;

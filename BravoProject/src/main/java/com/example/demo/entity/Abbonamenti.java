@@ -31,16 +31,17 @@ public class Abbonamenti {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_Utente", referencedColumnName = "ID_Utente")
-    private Integer ID_Utente;
+    private Utenti utente;
 	
 	
 
-	public Integer getID_Utente() {
-		return ID_Utente;
+
+	public Utenti getUtente() {
+		return utente;
 	}
 
-	public void setID_Utente(Integer iD_Utente) {
-		ID_Utente = iD_Utente;
+	public void setUtente(Utenti utente) {
+		this.utente = utente;
 	}
 
 	public Boolean getMensile() {

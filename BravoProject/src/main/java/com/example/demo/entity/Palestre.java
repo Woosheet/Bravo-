@@ -57,12 +57,7 @@ public class Palestre implements UserDetails {
 
 	private Boolean enabled;
 
-	/*
-	 * @OneToMany(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinColumn private Set<Corsi> ID_Corso;
-	 * 
-	 */
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_Palestra", referencedColumnName = "ID_Palestra")
 	private List<Corsi> corsi;
@@ -84,8 +79,14 @@ public class Palestre implements UserDetails {
 		this.password = password;
 		this.numTelefono = numTelefono;
 		this.info = info;
+		this.locked= false;
+		this.enabled=true;
 	}
 
+	public Palestre() {
+		
+	}
+	
 	public String getNomePalestra() {
 		return nomePalestra;
 	}

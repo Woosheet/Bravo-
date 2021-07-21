@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,11 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-//@Table(name="utenti_corsi")
+
 public class UtentiCorsi {
 
 	public UtentiCorsi() {
@@ -32,42 +34,28 @@ public class UtentiCorsi {
 		IDUtentiCorsi = iDUtentiCorsi;
 	}
 
-	//many to one
-	@Column(name = "ID_Utente")
-	private Integer IDUtente;
+	@ManyToOne( cascade = CascadeType.ALL)
+	 @JoinColumn(name = "ID_Utente", referencedColumnName = "ID_Utente")
+	private Utenti utente;
 	
-	//many to one
-	@Column(name = "ID_Corso")
-	   private Integer IDCorso;
+	@ManyToOne( cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_Corso", referencedColumnName = "ID_Corso")
+	   private Corsi corso;
 
-
-	
-	/*
-	@ManyToOne
-	@MapsId("ID_Utente")
-	@JoinColumn(name = "ID_Utente")
-	private Integer IDUtente;
-
-	@ManyToOne
-	@MapsId("ID_Corso")
-	@JoinColumn(name = "ID_Corso")
-	private Integer IDCorso;
-	 */
-	public Integer getIDUtente() {
-		return IDUtente;
+	public Utenti getUtente() {
+		return utente;
 	}
 
-	public void setIDUtente(Integer iDUtente) {
-		IDUtente = iDUtente;
+	public void setUtente(Utenti utente) {
+		this.utente = utente;
 	}
 
-	public Integer getIDCorso() {
-		return IDCorso;
+	public Corsi getCorso() {
+		return corso;
 	}
 
-	public void setIDCorso(Integer iDCorso) {
-		IDCorso = iDCorso;
+	public void setCorso(Corsi corso) {
+		this.corso = corso;
 	}
 
-	
 }

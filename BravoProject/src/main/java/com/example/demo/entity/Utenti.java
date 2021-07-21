@@ -57,15 +57,11 @@ public class Utenti implements UserDetails{
 	
 	private Boolean enabled;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(targetEntity=UtentiCorsi.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_Utente", referencedColumnName = "ID_Utente")
     private List<UtentiCorsi> utentiCorsi;
 
-	/*
-	@ManyToMany
-	@JoinTable(name = "UtentiCorsi", joinColumns = @JoinColumn(name = "ID_Utente"), inverseJoinColumns = @JoinColumn(name = "ID_Corso"))
-	Set<Corsi> corsiFreq;
-	*/
+
 
 	public String getAnagrafica() {
 		return anagrafica;

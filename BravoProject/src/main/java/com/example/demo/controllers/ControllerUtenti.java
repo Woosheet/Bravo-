@@ -3,7 +3,11 @@ package com.example.demo.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.AttributeNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +19,8 @@ import com.example.demo.entity.Role;
 import com.example.demo.entity.Utenti;
 import com.example.demo.repository.UtentiRepository;
 
+import response.ResponseHandler;
+
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/Utenti") // This means URL's start with /demo (after Application path)
 public class ControllerUtenti {
@@ -23,13 +29,13 @@ public class ControllerUtenti {
 	private UtentiRepository utentiRepository;
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
-	public @ResponseBody String addNewUser(@RequestParam String anagrafica, @RequestParam String email,
+	public  ResponseEntity<Object> addNewUser(@RequestParam String anagrafica, @RequestParam String email,
 			@RequestParam String nomeUtente, @RequestParam String password,
 			@RequestParam(required = false) String numTelefono) {
 		Utenti u = new Utenti();
 
 		if (controlloMail(email) || controlloNomeUtente(nomeUtente)) {
-			return "Nome utente o mail già esistenti";
+			return ResponseHandler.generateResponse("Nomeutente od email già esistendi", HttpStatus.BAD_REQUEST, null);
 		} else {
 			u.setAnagrafica(anagrafica);
 			u.setEmail(email);
@@ -39,8 +45,7 @@ public class ControllerUtenti {
 			u.setUtentiRole(Role.USER);
 			u.setEnabled(true);
 			u.setLocked(false);
-			utentiRepository.save(u);
-			return "Saved";
+			return ResponseHandler.generateResponse("Utente aggiunto", HttpStatus.OK, utentiRepository.save(u));
 		}
 	}
 
@@ -51,13 +56,14 @@ public class ControllerUtenti {
 	}
 
 	@GetMapping(path = "/searchUserById/{id}")
-	public @ResponseBody Optional<Utenti> ricercaUtente(@RequestParam int id) {
-
-		return utentiRepository.findById(id);
+	public  ResponseEntity<Object> ricercaUtente(@RequestParam int id) throws AttributeNotFoundException {
+		 Utenti u = utentiRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + id));	
+		return ResponseHandler.generateResponse("Dati utente", HttpStatus.OK, u);
 	}
 
+	
+	
 	// Implementare Ricerca per email e per nomeUtente
-
 	public boolean controlloMail(String email) {
 		Optional<Utenti> listaUtenti = utentiRepository.findByEmail(email);
 		return listaUtenti.isPresent();
@@ -68,6 +74,6 @@ public class ControllerUtenti {
 		return listaUtenti.isPresent();
 	}
 
-	// @PutMapping(path = "/disableAccount")
+
 
 }
