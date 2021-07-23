@@ -7,10 +7,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.demo.services.PalestreService;
+
 
 import lombok.AllArgsConstructor;
 
@@ -19,10 +19,11 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	/* 
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new PalestreService();
-	}
+	}*/
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {

@@ -1,9 +1,8 @@
 package com.example.demo.entity;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,14 +11,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,47 +24,67 @@ import lombok.Setter;
 
 import javax.persistence.JoinColumn;
 
-@SequenceGenerator(name = "IndiceUtenti", initialValue = 1, allocationSize = 1)
-@SuppressWarnings("serial")
+
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity // This tells Hibernate to make a table out of this class
-public class Utenti implements UserDetails{
+public class Utenti{
 	@Id
+	@SequenceGenerator(name = "IndiceUtenti", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceUtenti")
-	private int ID_Utente;
-
-	private String anagrafica;
-
+	private int IDUtente;
+	
+	private String nome;
+	
+	private String cognome;
+	
 	private String email;
-
-	private String nomeUtente;
-
+	
 	private String password;
 	
-	private String numTelefono;
+	private String numeroTelefono;
+	
+	private LocalDate scadenzaAbbonamento;
 	
 	@Enumerated(EnumType.STRING)
 	private Role utentiRole = Role.USER;
-	
-	private Boolean locked;
-	
-	private Boolean enabled;
-	
-	@OneToMany(targetEntity=UtentiCorsi.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_Utente", referencedColumnName = "ID_Utente")
-    private List<UtentiCorsi> utentiCorsi;
 
+	// spostare con entity lezione
+	@OneToMany(targetEntity=UtentiLezioni.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "IDUtente", referencedColumnName = "IDUtente")
+    private List<UtentiLezioni> utentiLezioni;
+	
+	
+	
 
-
-	public String getAnagrafica() {
-		return anagrafica;
+	public Utenti() {
+		
 	}
 
-	public void setAnagrafica(String anagrafica) {
-		this.anagrafica = anagrafica;
+	public int getIDUtente() {
+		return IDUtente;
+	}
+
+	public void setIDUtente(int iDUtente) {
+		IDUtente = iDUtente;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
 	}
 
 	public String getEmail() {
@@ -79,14 +95,6 @@ public class Utenti implements UserDetails{
 		this.email = email;
 	}
 
-	public String getNomeUtente() {
-		return nomeUtente;
-	}
-
-	public void setNomeUtente(String nomeUtente) {
-		this.nomeUtente = nomeUtente;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -95,44 +103,20 @@ public class Utenti implements UserDetails{
 		this.password = password;
 	}
 
-	public int getID_Utente() {
-		return ID_Utente;
+	public String getNumeroTelefono() {
+		return numeroTelefono;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(utentiRole.name());
-		return Collections.singletonList(authority);
+	public void setNumeroTelefono(String numeroTelefono) {
+		this.numeroTelefono = numeroTelefono;
 	}
 
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return nomeUtente;
+	public LocalDate getScadenzaAbbonamento() {
+		return scadenzaAbbonamento;
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return !locked;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return enabled;
+	public void setScadenzaAbbonamento(LocalDate scadenzaAbbonamento) {
+		this.scadenzaAbbonamento = scadenzaAbbonamento;
 	}
 
 	public Role getUtentiRole() {
@@ -143,28 +127,14 @@ public class Utenti implements UserDetails{
 		this.utentiRole = utentiRole;
 	}
 
-	public Boolean getLocked() {
-		return locked;
+	public List<UtentiLezioni> getUtentiLezioni() {
+		return utentiLezioni;
 	}
 
-	public void setLocked(Boolean locked) {
-		this.locked = locked;
+	public void setUtentiLezioni(List<UtentiLezioni> utentiLezioni) {
+		this.utentiLezioni = utentiLezioni;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getNumTelefono() {
-		return numTelefono;
-	}
-
-	public void setNumTelefono(String numTelefono) {
-		this.numTelefono = numTelefono;
-	}
+	
 
 }
