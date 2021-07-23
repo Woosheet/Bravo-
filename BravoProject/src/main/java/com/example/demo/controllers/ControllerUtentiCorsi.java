@@ -15,7 +15,7 @@ import com.example.demo.entity.Corsi;
 import com.example.demo.entity.Utenti;
 import com.example.demo.entity.UtentiCorsi;
 import com.example.demo.repository.CorsiRepository;
-import com.example.demo.repository.UtentiCorsiRepository;
+import com.example.demo.repository.UtentiLezioniRepository;
 import com.example.demo.repository.UtentiRepository;
 
 import response.ResponseHandler;
@@ -25,7 +25,7 @@ import response.ResponseHandler;
 public class ControllerUtentiCorsi {
 
 	@Autowired
-	private UtentiCorsiRepository utentiCorsiRepository;
+	private UtentiLezioniRepository utentiCorsiRepository;
 	
 	@Autowired
 	private CorsiRepository corsiRepository;

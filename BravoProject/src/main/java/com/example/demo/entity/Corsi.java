@@ -23,18 +23,7 @@ public class Corsi {
 
 
 	private String nomeCorso; //Descrizione del corso
-/*
-	@DateTimeFormat(style = "yyyy-MM-dd")
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-	private LocalDate date;	//dove e quando
 
-
-	@DateTimeFormat(style = "HH:mm")
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
-	private LocalTime tempo;
-	private int disponibilitaMassima; //numero persone che partecipanoMax
-	private int partecipanti; //numero persone che partecipano
-*/	
 	//chiave esterna a palestra
 	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDPalestra", referencedColumnName = "IDPalestra")

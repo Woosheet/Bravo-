@@ -13,7 +13,11 @@ public interface PalestreRepository extends JpaRepository<Palestre, Integer>{
 	/*
 	 * todo: aggiungi cose
 	 */
-	Optional<Palestre> findByEmail(String email);
+	//ricerca palestre tramite nome
+	Optional<Palestre> findByNomePalestra(String nome);
+	
+	//ricerca palestre tramite posizione
+	Optional<Palestre> findByIndirizzoPalestra(String email);
 	
 }
 
