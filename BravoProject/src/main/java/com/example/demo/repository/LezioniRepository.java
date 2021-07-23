@@ -16,7 +16,7 @@ public interface LezioniRepository extends JpaRepository<Lezioni, Integer>{
 	List<Lezioni> findByDataLezione(LocalDate dataL);
 	
 	//ricerca attività per tempo
-	List<Lezioni> findByOrarioLezione(LocalTime orarioL);
+	List<Lezioni> findByOrarioInizio(LocalTime orarioL);
 	
 		
 	

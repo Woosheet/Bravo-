@@ -14,6 +14,8 @@ public interface UtentiLezioniRepository extends JpaRepository<UtentiLezioni, In
 	
   //lista di partecipazione dove il campo lezione equivale alla lezione passat1 per parametro
   List<UtentiLezioni> findByLezione(Lezioni lezione);
+  
+  int countByLezione(Lezioni lezione);
 	
 
 }

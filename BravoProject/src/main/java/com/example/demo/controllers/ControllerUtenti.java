@@ -1,10 +1,7 @@
 package com.example.demo.controllers;
 
-import java.util.List;
 import java.util.Optional;
-
 import javax.management.AttributeNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.demo.entity.Role;
 import com.example.demo.entity.Utenti;
 import com.example.demo.repository.UtentiRepository;
-
 import response.ResponseHandler;
 
 @Controller // This means that this class is a Controller
@@ -29,22 +24,20 @@ public class ControllerUtenti {
 	private UtentiRepository utentiRepository;
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
-	public  ResponseEntity<Object> addNewUser(@RequestParam String anagrafica, @RequestParam String email,
-			@RequestParam String nomeUtente, @RequestParam String password,
-			@RequestParam(required = false) String numTelefono) {
+	public ResponseEntity<Object> addNewUser(@RequestParam String nome, @RequestParam String cognome,
+			@RequestParam String email, @RequestParam String password,
+			@RequestParam(required = false) String numTelefono, @RequestParam String scadenzaAbbonamento) {
 		Utenti u = new Utenti();
 
-		if (controlloMail(email) || controlloNomeUtente(nomeUtente)) {
+		if (controlloMail(email)) {
 			return ResponseHandler.generateResponse("Nomeutente od email già esistendi", HttpStatus.BAD_REQUEST, null);
 		} else {
-			u.setAnagrafica(anagrafica);
+			u.setNome(nome);
+			u.setCognome(cognome);
 			u.setEmail(email);
-			u.setNomeUtente(nomeUtente);
 			u.setPassword(password);
-			u.setNumTelefono(numTelefono);
+			u.setNumeroTelefono(numTelefono);
 			u.setUtentiRole(Role.USER);
-			u.setEnabled(true);
-			u.setLocked(false);
 			return ResponseHandler.generateResponse("Utente aggiunto", HttpStatus.OK, utentiRepository.save(u));
 		}
 	}
@@ -56,24 +49,15 @@ public class ControllerUtenti {
 	}
 
 	@GetMapping(path = "/searchUserById/{id}")
-	public  ResponseEntity<Object> ricercaUtente(@RequestParam int id) throws AttributeNotFoundException {
-		 Utenti u = utentiRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + id));	
+	public ResponseEntity<Object> ricercaUtente(@RequestParam int id) throws AttributeNotFoundException {
+		Utenti u = utentiRepository.findById(id)
+				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + id));
 		return ResponseHandler.generateResponse("Dati utente", HttpStatus.OK, u);
 	}
 
-	
-	
 	// Implementare Ricerca per email e per nomeUtente
 	public boolean controlloMail(String email) {
 		Optional<Utenti> listaUtenti = utentiRepository.findByEmail(email);
 		return listaUtenti.isPresent();
 	}
-
-	public boolean controlloNomeUtente(String nomeUtente) {
-		Optional<Utenti> listaUtenti = utentiRepository.findByNomeUtente(nomeUtente);
-		return listaUtenti.isPresent();
-	}
-
-
-
 }
