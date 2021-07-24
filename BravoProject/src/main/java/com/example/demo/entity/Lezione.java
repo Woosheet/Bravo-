@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity // This tells Hibernate to make a table out of this class
-public class Lezioni {
+public class Lezione {
 	@Id
 	@SequenceGenerator(name = "IndiceLezioni", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceLezioni")
@@ -47,9 +47,9 @@ public class Lezioni {
 	//chiave esterna a corso
 	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDCorso", referencedColumnName = "IDCorso")
-   	private Corsi corso;
+   	private Corso corso;
 
-	public Lezioni() {
+	public Lezione() {
 	
 	}
 
@@ -93,11 +93,11 @@ public class Lezioni {
 		this.modalitaCorso = modalitaCorso;
 	}
 
-	public Corsi getCorso() {
+	public Corso getCorso() {
 		return corso;
 	}
 
-	public void setCorso(Corsi corso) {
+	public void setCorso(Corso corso) {
 		this.corso = corso;
 	}
 

@@ -17,28 +17,27 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.example.demo.entity.Corsi;
-import com.example.demo.entity.Lezioni;
+import com.example.demo.entity.Corso;
+import com.example.demo.entity.Lezione;
 
-import com.example.demo.repository.LezioniRepository;
-
-import response.ResponseHandler;
+import com.example.demo.repository.LezioneRepository;
+import com.example.demo.response.ResponseHandler;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/Lezioni") // This means URL's start with /demo (after Application path)
-public class ControllerLezioni {
+public class ControllerLezione {
 	@Autowired
-	private LezioniRepository lezioniRepository;// repository lezioni
+	private LezioneRepository lezioneRepository;// repository lezioni
 
 	// carichiamo una lezione
 	@PostMapping(path = "/add")
-	public ResponseEntity<Object> addLezione(@RequestParam Corsi corso,
+	public ResponseEntity<Object> addLezione(@RequestParam Corso corso,
 			@RequestParam @DateTimeFormat(style = "yyyy-MM-dd") LocalDate dataLezione,
 			@RequestParam LocalTime orarioInizio, @RequestParam Integer disponibilitaMassima,
 			@RequestParam String modalitaCorso) throws AttributeNotFoundException {
 
 		// creo un oggetto lezione
-		Lezioni l = new Lezioni();
+		Lezione l = new Lezione();
 
 		l.setDataLezione(dataLezione);
 		l.setOrarioInizio(orarioInizio);
@@ -47,21 +46,21 @@ public class ControllerLezioni {
 		l.setCorso(corso);
 
 		// salvo la lezione
-		return ResponseHandler.generateResponse("Lezione aggiunto", HttpStatus.OK, lezioniRepository.save(l));
+		return ResponseHandler.generateResponse("Lezione aggiunto", HttpStatus.OK, lezioneRepository.save(l));
 	}
 
 	// metodo inutile
 	@GetMapping(path = "/all")
-	public @ResponseBody List<Lezioni> getAllLezioni() {
+	public @ResponseBody List<Lezione> getAllLezioni() {
 		// This returns a JSON or XML with the users
-		return lezioniRepository.findAll();
+		return lezioneRepository.findAll();
 	}
 
 	// ricerca per Orario lezione
 	@GetMapping(path = "/search/orario")
 	public ResponseEntity<Object> findByOrarioInizio(@RequestParam LocalTime orarioInizio) {
 		return ResponseHandler.generateResponse("Lista attivita:", HttpStatus.OK,
-				lezioniRepository.findByOrarioInizio(orarioInizio));
+				lezioneRepository.findByOrarioInizio(orarioInizio));
 	}
 
 	// ricerca per data lezione
@@ -69,7 +68,7 @@ public class ControllerLezioni {
 	public ResponseEntity<Object> findByDataLezione(
 			@RequestParam @DateTimeFormat(style = "yyyy-MM-dd") LocalDate dataLezione) {
 		return ResponseHandler.generateResponse("Lista attivita:", HttpStatus.OK,
-				lezioniRepository.findByDataLezione(dataLezione));
+				lezioneRepository.findByDataLezione(dataLezione));
 	}
 
 	// update dei dati lezione
@@ -81,7 +80,7 @@ public class ControllerLezioni {
 			@RequestParam(required = false) String modalitaCorso) throws AttributeNotFoundException {
 
 		// creo un oggetto lezione
-		Lezioni l = lezioniRepository.findById(IDLezione)
+		Lezione l = lezioneRepository.findById(IDLezione)
 				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + IDLezione));
 
 		l.setDataLezione(dataLezione);
@@ -89,8 +88,8 @@ public class ControllerLezioni {
 		l.setModalitaCorso(modalitaCorso);
 		l.setOrarioInizio(orarioInizio);
 
-		lezioniRepository.save(l);
-		return ResponseHandler.generateResponse("Lezione aggiornata", HttpStatus.OK, lezioniRepository.save(l));
+		lezioneRepository.save(l);
+		return ResponseHandler.generateResponse("Lezione aggiornata", HttpStatus.OK, lezioneRepository.save(l));
 
 	}
 
@@ -98,7 +97,7 @@ public class ControllerLezioni {
 	@DeleteMapping(path = "/delete")
 	public ResponseEntity<Object> deleteByIdLezione(@RequestParam int IDLezione) throws AttributeNotFoundException {
 
-		lezioniRepository.deleteById(IDLezione);
+		lezioneRepository.deleteById(IDLezione);
 
 		return ResponseHandler.generateResponse("Corso Eliminato", HttpStatus.OK, null);
 	}

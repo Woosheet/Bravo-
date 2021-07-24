@@ -14,21 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.entity.Palestre;
-import com.example.demo.entity.Utenti;
-import com.example.demo.repository.PalestreRepository;
-import com.example.demo.repository.UtentiRepository;
-
-import response.ResponseHandler;
+import com.example.demo.entity.Palestra;
+import com.example.demo.entity.Utente;
+import com.example.demo.repository.PalestraRepository;
+import com.example.demo.repository.UtenteRepository;
+import com.example.demo.response.ResponseHandler;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/Palestre") // This means URL's start with /demo (after Application path)
-public class ControllerPalestre {
+public class ControllerPalestra {
 
 	@Autowired
-	private PalestreRepository palestreRepository;// repository palestre
+	private PalestraRepository palestraRepository;// repository palestre
 	@Autowired
-	private UtentiRepository uR;// repositori utenti
+	private UtenteRepository uR;// repositori utenti
 
 	// aggiunta di una nuova palestra
 	@PostMapping(path = "/add") // Map ONLY POST Requests
@@ -37,7 +36,7 @@ public class ControllerPalestre {
 			@RequestParam int IDOwner) throws AttributeNotFoundException {
 
 		// creo un oggetto palestre
-		Palestre p = new Palestre();
+		Palestra p = new Palestra();
 		// setto i campi del nuovo oggetto
 		p.setNomePalestra(nomePalestra);
 		p.setIndirizzoPalestra(indirizzoPalestra);
@@ -45,20 +44,20 @@ public class ControllerPalestre {
 		p.setIndirizzoPalestra(indirizzoPalestra);
 
 		// Nuovo oggetto di tipo Utenti per rappresentare l'owner della palestra
-		Utenti u = uR.findById(IDOwner)
+		Utente u = uR.findById(IDOwner)
 				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + IDOwner));
 
 		p.setUtente(u);// setto l'owner
 
-		return ResponseHandler.generateResponse("Lista attivita:", HttpStatus.OK, palestreRepository.save(p));
+		return ResponseHandler.generateResponse("Lista attivita:", HttpStatus.OK, palestraRepository.save(p));
 
 	}
 
 	// ritorna tutte le palestre
 	@GetMapping(path = "/all")
-	public @ResponseBody Iterable<Palestre> getAllPalestre() {
+	public @ResponseBody Iterable<Palestra> getAllPalestre() {
 		// This returns a JSON or XML with the users
-		return palestreRepository.findAll();
+		return palestraRepository.findAll();
 	}
 
 	// Ricerca per nome palestra
@@ -66,7 +65,7 @@ public class ControllerPalestre {
 	public ResponseEntity<Object> ricercaPerNome(@RequestParam String nomePalestra) {
 
 		// query di ricerca
-		Optional<Palestre> p = palestreRepository.findByNomePalestra(nomePalestra);
+		Optional<Palestra> p = palestraRepository.findByNomePalestra(nomePalestra);
 
 		if (p.isPresent()) {// se ho risultati
 			return ResponseHandler.generateResponse("Lista palestre:", HttpStatus.OK, p);
@@ -84,7 +83,7 @@ public class ControllerPalestre {
 	public ResponseEntity<Object> ricercaPerIndirizzo(@RequestParam String indirizzoPalestra) {
 
 		// query di ricerca
-		Optional<Palestre> p = palestreRepository.findByIndirizzoPalestra(indirizzoPalestra);
+		Optional<Palestra> p = palestraRepository.findByIndirizzoPalestra(indirizzoPalestra);
 
 		if (p.isPresent()) {// se ho risultati
 			return ResponseHandler.generateResponse("Lista palestre:", HttpStatus.OK, p);

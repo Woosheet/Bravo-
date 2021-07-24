@@ -5,17 +5,17 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.entity.Lezioni;
-import com.example.demo.entity.UtentiLezioni;
+import com.example.demo.entity.Lezione;
+import com.example.demo.entity.UtenteLezione;
 
-public interface UtentiLezioniRepository extends JpaRepository<UtentiLezioni, Integer> {
+public interface UtenteLezioneRepository extends JpaRepository<UtenteLezione, Integer> {
 	
 	//List<UtentiCorsi> findByUtente(Utenti utente);
 	
   //lista di partecipazione dove il campo lezione equivale alla lezione passat1 per parametro
-  List<UtentiLezioni> findByLezione(Lezioni lezione);
+  List<UtenteLezione> findByLezione(Lezione lezione);
   
-  int countByLezione(Lezioni lezione);
+  int countByLezione(Lezione lezione);
 	
 
 }

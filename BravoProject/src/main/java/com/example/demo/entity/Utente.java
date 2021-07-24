@@ -15,7 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,7 +32,7 @@ import javax.persistence.JoinColumn;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity // This tells Hibernate to make a table out of this class
-public class Utenti{
+public class Utente{
 	@Id
 	@SequenceGenerator(name = "IndiceUtenti", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceUtenti")
@@ -46,20 +48,19 @@ public class Utenti{
 	
 	private String numeroTelefono;
 	
+	@DateTimeFormat(style = "yyyy-MM-dd")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private LocalDate scadenzaAbbonamento;
 	
 	@Enumerated(EnumType.STRING)
 	private Role utentiRole = Role.USER;
 
 	// spostare con entity lezione
-	@OneToMany(targetEntity=UtentiLezioni.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity=UtenteLezione.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "IDUtente", referencedColumnName = "IDUtente")
-    private List<UtentiLezioni> utentiLezioni;
+    private List<UtenteLezione> utenteLezione;
 	
-	
-	
-
-	public Utenti() {
+	public Utente() {
 		
 	}
 
@@ -127,12 +128,12 @@ public class Utenti{
 		this.utentiRole = utentiRole;
 	}
 
-	public List<UtentiLezioni> getUtentiLezioni() {
-		return utentiLezioni;
+	public List<UtenteLezione> getUtentiLezioni() {
+		return utenteLezione;
 	}
 
-	public void setUtentiLezioni(List<UtentiLezioni> utentiLezioni) {
-		this.utentiLezioni = utentiLezioni;
+	public void setUtentiLezioni(List<UtenteLezione> utenteLezione) {
+		this.utenteLezione = utenteLezione;
 	}
 
 	

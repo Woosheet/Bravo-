@@ -11,28 +11,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.entity.Lezioni;
-import com.example.demo.entity.Utenti;
-import com.example.demo.entity.UtentiLezioni;
+import com.example.demo.entity.Lezione;
+import com.example.demo.entity.Utente;
+import com.example.demo.entity.UtenteLezione;
 
-import com.example.demo.repository.LezioniRepository;
-import com.example.demo.repository.UtentiLezioniRepository;
-import com.example.demo.repository.UtentiRepository;
-
-import response.ResponseHandler;
+import com.example.demo.repository.LezioneRepository;
+import com.example.demo.repository.UtenteLezioneRepository;
+import com.example.demo.repository.UtenteRepository;
+import com.example.demo.response.ResponseHandler;
 
 @Controller
 @RequestMapping(path = "/partecipazione")
-public class ControllerUtentiLezioni {
+public class ControllerUtenteLezione {
 
 	@Autowired
-	private UtentiLezioniRepository utentiLezioniRepository;//repository partecipazioni
+	private UtenteLezioneRepository utenteLezioneRepository;//repository partecipazioni
 	
 	@Autowired
-	private LezioniRepository lezioniRepository;//repository lezioni
+	private LezioneRepository lezioneRepository;//repository lezioni
 	
 	@Autowired
-	private UtentiRepository utentiRepository;//repository utenti
+	private UtenteRepository utenteRepository;//repository utenti
 	
 	
 	
@@ -41,23 +40,23 @@ public class ControllerUtentiLezioni {
 	public ResponseEntity<Object> addPartecipazione (@RequestParam Integer IDLezione, @RequestParam Integer IDUtente) throws AttributeNotFoundException{
 		
 		//corso di cui passiamo l'id
-		Lezioni l = lezioniRepository.findById(IDLezione)
+		Lezione l = lezioneRepository.findById(IDLezione)
 				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + IDLezione));
 		//utente di cui passiamo l'id
-		Utenti u = utentiRepository.findById(IDUtente)
+		Utente u = utenteRepository.findById(IDUtente)
 				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + IDUtente));
 		
-		if(l.getDisponibilitaMassima() >  utentiLezioniRepository.countByLezione(l)) {//c'è ancora spazio, procedo
+		if(l.getDisponibilitaMassima() >  utenteLezioneRepository.countByLezione(l)) {//c'è ancora spazio, procedo
 			
 			if(giaRegistrato(l, IDUtente)) {//non mi sono registrato già
 				
 				//oggeto da andare a scrivere
-				UtentiLezioni ul = new UtentiLezioni();
+				UtenteLezione ul = new UtenteLezione();
 				ul.setLezione(l);
 				ul.setUtente(u);
 				
 				//restituisco la partecipazione dopo averla salvata
-				return ResponseHandler.generateResponse("Partecipazione aggiunta!", HttpStatus.OK, utentiLezioniRepository.save(ul));
+				return ResponseHandler.generateResponse("Partecipazione aggiunta!", HttpStatus.OK, utenteLezioneRepository.save(ul));
 				
 			}else {//avviso che mi sono gia registrato a questa lezione
 				return ResponseHandler.generateResponse("Registrazione già effettuata a questa lezione", HttpStatus.BAD_REQUEST, null);
@@ -72,10 +71,10 @@ public class ControllerUtentiLezioni {
 	
 	// Controllo se Utente è già registrato al corso
 	
-	public boolean giaRegistrato(Lezioni lezione, Integer IDUtente) {
+	public boolean giaRegistrato(Lezione lezione, Integer IDUtente) {
 
 		//lista di partecipazioni al corso passato per parametro
-		 List<UtentiLezioni> listaPartecipazione = utentiLezioniRepository.findByLezione(lezione);
+		 List<UtenteLezione> listaPartecipazione = utenteLezioneRepository.findByLezione(lezione);
 		for (int i = 0; i < listaPartecipazione.size(); i++) {
 			if (IDUtente == listaPartecipazione.get(i).getUtente().getIDUtente()) {
 				return false; //return false SE c'è corrispondenza
@@ -87,7 +86,7 @@ public class ControllerUtentiLezioni {
 	//elimino una partecipazione
 	@DeleteMapping(path = "/deletePartecipazione")
 	public ResponseEntity<Object> deletePartecipazione(@RequestParam Integer IDUtenteLezione) {
-		utentiLezioniRepository.deleteById(IDUtenteLezione);
+		utenteLezioneRepository.deleteById(IDUtenteLezione);
 		return ResponseHandler.generateResponse("La partecipazione è stata eliminata", HttpStatus.OK, null);
 	}
 

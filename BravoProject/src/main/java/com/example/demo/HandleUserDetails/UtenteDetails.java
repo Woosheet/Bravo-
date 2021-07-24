@@ -1,17 +1,18 @@
-package HandleUserDetails;
+package com.example.demo.HandleUserDetails;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.demo.entity.Utenti;
+import com.example.demo.entity.Utente;
 
-public class UtentiDetails implements UserDetails {
+@SuppressWarnings("serial")
+public class UtenteDetails implements UserDetails {
 
-	Utenti utente;
+	private Utente utente;
 
-	public UtentiDetails(Utenti utente) {
+	public UtenteDetails(Utente utente) {
 		this.utente = utente;
 	}
 

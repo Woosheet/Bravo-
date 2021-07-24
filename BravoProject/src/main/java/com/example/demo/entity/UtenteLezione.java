@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 
-public class UtentiLezioni {
+public class UtenteLezione {
 
 
 	@Id
@@ -26,14 +26,14 @@ public class UtentiLezioni {
 	//chiave a utente
 	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDUtente", referencedColumnName = "IDUtente")
-	private Utenti utente;
+	private Utente utente;
 	
 	//chiave a lezione
 	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDLezione", referencedColumnName = "IDLezione")
-	   private Lezioni lezione;
+	   private Lezione lezione;
 
-	public UtentiLezioni() {
+	public UtenteLezione() {
 		
 	}
 
@@ -45,19 +45,19 @@ public class UtentiLezioni {
 		IDUtentiLezioni = iDUtentiLezioni;
 	}
 
-	public Utenti getUtente() {
+	public Utente getUtente() {
 		return utente;
 	}
 
-	public void setUtente(Utenti utente) {
+	public void setUtente(Utente utente) {
 		this.utente = utente;
 	}
 
-	public Lezioni getLezione() {
+	public Lezione getLezione() {
 		return lezione;
 	}
 
-	public void setLezione(Lezioni lezione) {
+	public void setLezione(Lezione lezione) {
 		this.lezione = lezione;
 	}
 

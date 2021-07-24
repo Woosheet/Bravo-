@@ -12,51 +12,58 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.example.demo.entity.Corsi;
-import com.example.demo.entity.Palestre;
-import com.example.demo.repository.CorsiRepository;
-import com.example.demo.repository.PalestreRepository;
-import response.ResponseHandler;
+import com.example.demo.entity.Corso;
+import com.example.demo.entity.Palestra;
+import com.example.demo.repository.CorsoRepository;
+import com.example.demo.repository.PalestraRepository;
+import com.example.demo.response.ResponseHandler;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/Corsi") // This means URL's start with /demo (after Application path)
-public class ControllerCorsi {
+public class ControllerCorso {
 	@Autowired 
-	private CorsiRepository corsiRepository;
+	private CorsoRepository corsoRepository;
 	
 	@Autowired
-	private PalestreRepository palestreRepository;
+	private PalestraRepository palestraRepository;
 
 	// carichiamo un corso
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public ResponseEntity<Object> addCorso(@RequestParam String nomeCorso, @RequestParam int IDPalestra) throws AttributeNotFoundException {
 	
 		//creo un oggetto palestra
-		Palestre p = palestreRepository.findById(IDPalestra)
+		Palestra p = palestraRepository.findById(IDPalestra)
 				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + IDPalestra));
 
 		// creo un oggetto corso
-		Corsi n = new Corsi();
+		Corso n = new Corso();
 
 		n.setNomeCorso(nomeCorso);
 		n.setPalestra(p);
 
 		// salvo il corso
-		return ResponseHandler.generateResponse("Corso aggiunto", HttpStatus.OK, corsiRepository.save(n));
+		return ResponseHandler.generateResponse("Corso aggiunto", HttpStatus.OK, corsoRepository.save(n));
 	}
 
 	//metodo inutile
 	@GetMapping(path = "/all")
-	public @ResponseBody Iterable<Corsi> getAllCorsi() {
+	public @ResponseBody Iterable<Corso> getAllCorsi() {
 		// This returns a JSON or XML with the users
-		return corsiRepository.findAll();
+		return corsoRepository.findAll();
 	}
 
 	// ricerca per palestra || i miei corsi
 	@GetMapping(path = "/search/palestra")
 	public ResponseEntity<Object> findByPalesta(@RequestParam Integer IDPalestra) {
-		return ResponseHandler.generateResponse("Lista attivita:", HttpStatus.OK, corsiRepository.findByPalestra(IDPalestra));
+		return ResponseHandler.generateResponse("Lista attivita:", HttpStatus.OK, corsoRepository.findByPalestra(IDPalestra));
 	}
+	
+	//ricerca corso per il nome del corso
+	@GetMapping("/search/nomeCorso")
+	public ResponseEntity<Object> findByNomeCorso(@RequestParam String nomeCorso) {
+		return ResponseHandler.generateResponse("Lista attivita:", HttpStatus.OK, corsoRepository.findByNomeCorsoContainingIgnoreCase(nomeCorso));
+	}
+	
 
 
 	// update dei dati
@@ -65,25 +72,25 @@ public class ControllerCorsi {
 			throws AttributeNotFoundException {
 
 		//creo un oggetto palestra
-		Palestre p = palestreRepository.findById(IDPalestra)
+		Palestra p = palestraRepository.findById(IDPalestra)
 				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + IDPalestra));
 
-		Corsi corso = corsiRepository.findById(id)
+		Corso corso = corsoRepository.findById(id)
 				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + id));
 
 		corso.setNomeCorso(nomeCorso);
 		corso.setPalestra(p);
 
-		corsiRepository.save(corso);
-		return ResponseHandler.generateResponse("Corso aggiornato", HttpStatus.OK, corsiRepository.save(corso));
+		corsoRepository.save(corso);
+		return ResponseHandler.generateResponse("Corso aggiornato", HttpStatus.OK, corsoRepository.save(corso));
 
 	}
 
 	@DeleteMapping(path = "/delete")
 	public ResponseEntity<Object> deleteByIdCorso(@RequestParam int id) throws AttributeNotFoundException {
-		corsiRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Utente non Esiste: " + id));
+		corsoRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Utente non Esiste: " + id));
 
-		corsiRepository.deleteById(id);
+		corsoRepository.deleteById(id);
 
 		return ResponseHandler.generateResponse("Corso Eliminato", HttpStatus.OK, null);
 	}

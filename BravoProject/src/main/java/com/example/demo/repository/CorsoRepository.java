@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.demo.entity.Corsi;
+import com.example.demo.entity.Corso;
 
 
 
-public interface CorsiRepository extends JpaRepository<Corsi, Integer>{
+public interface CorsoRepository extends JpaRepository<Corso, Integer>{
 	/*
 	 * todo: aggiungi cose
 	 */
@@ -20,11 +20,11 @@ public interface CorsiRepository extends JpaRepository<Corsi, Integer>{
 	//ricerca di tutti i corsi di una determinata palestra
 	@Query(
 			  value = "SELECT * FROM corsi WHERE id_palestra = :idpalestra ", nativeQuery = true)
-	Iterable<Corsi> findByPalestra(@Param(value="idpalestra")Integer idpalestra);
+	Iterable<Corso> findByPalestra(@Param(value="idpalestra")Integer idpalestra);
 	
 
 	//ricerca per nome del corso
-	List<Corsi> findByNomeCorsoContainingIgnoreCase(String nomeCorso);
+	List<Corso> findByNomeCorsoContainingIgnoreCase(String nomeCorso);
 	
 	
 }

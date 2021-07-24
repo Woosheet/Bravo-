@@ -26,7 +26,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity // This tells Hibernate to make a table out of this class
-public class Palestre {
+public class Palestra {
 	@Id
 	@SequenceGenerator(name = "IndicePalestra", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndicePalestra")
@@ -40,13 +40,13 @@ public class Palestre {
 	//manytoone utenti owner
 	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDUtente", referencedColumnName = "IDUtente")
-	private Utenti utente;
+	private Utente utente;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDPalestra", referencedColumnName = "IDPalestra")
-	private List<Corsi> corsi;
+	private List<Corso> corso;
 
-	public Palestre() {
+	public Palestra() {
 		
 	}
 
@@ -90,20 +90,20 @@ public class Palestre {
 		this.info = info;
 	}
 
-	public Utenti getUtente() {
+	public Utente getUtente() {
 		return utente;
 	}
 
-	public void setUtente(Utenti utente) {
+	public void setUtente(Utente utente) {
 		this.utente = utente;
 	}
 
-	public List<Corsi> getCorsi() {
-		return corsi;
+	public List<Corso> getCorsi() {
+		return corso;
 	}
 
-	public void setCorsi(List<Corsi> corsi) {
-		this.corsi = corsi;
+	public void setCorsi(List<Corso> corso) {
+		this.corso = corso;
 	}
 	
 	

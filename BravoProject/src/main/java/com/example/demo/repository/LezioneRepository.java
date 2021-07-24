@@ -6,17 +6,17 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-import com.example.demo.entity.Lezioni;
+import com.example.demo.entity.Lezione;
 
 
 
-public interface LezioniRepository extends JpaRepository<Lezioni, Integer>{
+public interface LezioneRepository extends JpaRepository<Lezione, Integer>{
 
 	//ricerca attività per data
-	List<Lezioni> findByDataLezione(LocalDate dataL);
+	List<Lezione> findByDataLezione(LocalDate dataL);
 	
 	//ricerca attività per tempo
-	List<Lezioni> findByOrarioInizio(LocalTime orarioL);
+	List<Lezione> findByOrarioInizio(LocalTime orarioL);
 	
 		
 	

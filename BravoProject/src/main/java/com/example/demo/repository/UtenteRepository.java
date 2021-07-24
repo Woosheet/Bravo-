@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.example.demo.entity.Utenti;
+import com.example.demo.entity.Utente;
 
-public interface UtentiRepository extends JpaRepository<Utenti, Integer> {
+public interface UtenteRepository extends JpaRepository<Utente, Integer> {
 
-	Optional<Utenti> findByEmail(String email);
+	Optional<Utente> findByEmail(String email);
 
 
 	@Query("SELECT u FROM Utenti u WHERE u.email = ?1")
-	Utenti findEmail (String email);
+	Utente findEmail (String email);
 }

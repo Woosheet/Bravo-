@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 
 
 @Entity // This tells Hibernate to make a table out of this class
-public class Corsi {
+public class Corso {
 	@Id
 	@SequenceGenerator(name = "IndiceCorsi", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IndiceCorsi")
@@ -27,9 +27,9 @@ public class Corsi {
 	//chiave esterna a palestra
 	@ManyToOne( cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDPalestra", referencedColumnName = "IDPalestra")
-   	private Palestre palestra;
+   	private Palestra palestra;
 
-	public Corsi() {
+	public Corso() {
 	
 	}
 
@@ -49,11 +49,11 @@ public class Corsi {
 		this.nomeCorso = nomeCorso;
 	}
 
-	public Palestre getPalestra() {
+	public Palestra getPalestra() {
 		return palestra;
 	}
 
-	public void setPalestra(Palestre palestra) {
+	public void setPalestra(Palestra palestra) {
 		this.palestra = palestra;
 	}
 

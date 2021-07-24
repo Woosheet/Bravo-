@@ -5,19 +5,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.entity.Palestre;
+import com.example.demo.entity.Palestra;
 
 @Repository
 @Transactional(readOnly = true)
-public interface PalestreRepository extends JpaRepository<Palestre, Integer>{
+public interface PalestraRepository extends JpaRepository<Palestra, Integer>{
 	/*
 	 * todo: aggiungi cose
 	 */
 	//ricerca palestre tramite nome
-	Optional<Palestre> findByNomePalestra(String nome);
+	Optional<Palestra> findByNomePalestra(String nome);
 	
 	//ricerca palestre tramite posizione
-	Optional<Palestre> findByIndirizzoPalestra(String email);
+	Optional<Palestra> findByIndirizzoPalestra(String email);
 	
 }
 

@@ -10,8 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import HandleUserDetails.UtentiDetails;
-import HandleUserDetails.UtentiDetailsService;
+import com.example.demo.HandleUserDetails.UtenteDetails;
+import com.example.demo.HandleUserDetails.UtenteDetailsService;
+
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -22,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new UtentiDetailsService();
+		return new UtenteDetailsService();
 	}
 
 	@Bean

@@ -1,31 +1,27 @@
-package HandleUserDetails;
-
-import java.util.Optional;
-
-import javax.management.AttributeNotFoundException;
+package com.example.demo.HandleUserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.example.demo.entity.Utenti;
-import com.example.demo.repository.UtentiRepository;
+import com.example.demo.entity.Utente;
+import com.example.demo.repository.UtenteRepository;
 
-public class UtentiDetailsService implements UserDetailsService {
+public class UtenteDetailsService implements UserDetailsService {
 
 	@Autowired
-	UtentiRepository utentiRepository;
+	UtenteRepository utenteRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) {
-		Utenti u = utentiRepository.findEmail(email);
+		Utente u = utenteRepository.findEmail(email);
 		
 		if(u == null) {
 			throw new UsernameNotFoundException("Email non trovata: " + email);
 		}
 		
-		return new UtentiDetails(u);
+		return new UtenteDetails(u);
 	}
 
 }
