@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+/*
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers(
@@ -53,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				).permitAll().anyRequest()
 				.authenticated().and().formLogin(); 
 	//	http.authorizeRequests().antMatchers("/**").permitAll();
-	}
+	}*/
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
