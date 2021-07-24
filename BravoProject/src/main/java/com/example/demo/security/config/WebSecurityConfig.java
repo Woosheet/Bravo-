@@ -7,11 +7,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
-
+import HandleUserDetails.UtentiDetails;
+import HandleUserDetails.UtentiDetailsService;
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -19,18 +19,18 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	/* 
+	
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new PalestreService();
-	}*/
+		return new UtentiDetailsService();
+	}
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-/*
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers(
@@ -50,11 +50,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/Utenti/searchUserById/{id}",
 				"/partecipazione/addPartecipazione",
 				"/partecipazione/deletePartecipazione",
-				"/Abbonamenti/add"
+				"/Abbonamenti/add",
+				"/Utenti/RegistrationProcess"
 				).permitAll().anyRequest()
 				.authenticated().and().formLogin(); 
 	//	http.authorizeRequests().antMatchers("/**").permitAll();
-	}*/
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

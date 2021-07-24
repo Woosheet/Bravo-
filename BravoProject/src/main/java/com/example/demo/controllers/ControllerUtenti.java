@@ -5,6 +5,7 @@ import javax.management.AttributeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class ControllerUtenti {
 		Utenti u = new Utenti();
 
 		if (controlloMail(email)) {
-			return ResponseHandler.generateResponse("Nomeutente od email già esistendi", HttpStatus.BAD_REQUEST, null);
+			return ResponseHandler.generateResponse("Email già esistente", HttpStatus.BAD_REQUEST, null);
 		} else {
 			u.setNome(nome);
 			u.setCognome(cognome);
@@ -38,6 +39,27 @@ public class ControllerUtenti {
 			u.setPassword(password);
 			u.setNumeroTelefono(numTelefono);
 			u.setUtentiRole(Role.USER);
+			return ResponseHandler.generateResponse("Utente aggiunto", HttpStatus.OK, utentiRepository.save(u));
+		}
+	}
+	
+	@PostMapping(path = "/RegistrationProcess") // Map ONLY POST Requests
+	public ResponseEntity<Object> Registration(@RequestParam String nome, @RequestParam String cognome,
+			@RequestParam String email, @RequestParam String password,
+			@RequestParam(required = false) String numTelefono) {
+		Utenti u = new Utenti();
+
+		if (controlloMail(email)) {
+			return ResponseHandler.generateResponse("Email già esistente", HttpStatus.BAD_REQUEST, null);
+		} else {
+			u.setNome(nome);
+			u.setCognome(cognome);
+			u.setEmail(email);
+			u.setNumeroTelefono(numTelefono);
+			u.setUtentiRole(Role.USER);
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String encodedPassword = encoder.encode(password);
+			u.setPassword(encodedPassword);
 			return ResponseHandler.generateResponse("Utente aggiunto", HttpStatus.OK, utentiRepository.save(u));
 		}
 	}
