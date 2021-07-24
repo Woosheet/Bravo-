@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,11 +23,12 @@ import com.example.demo.repository.UtenteRepository;
 import com.example.demo.response.ResponseHandler;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/Palestre") // This means URL's start with /demo (after Application path)
+@RequestMapping(path = "/Palestra") // This means URL's start with /demo (after Application path)
 public class ControllerPalestra {
 
 	@Autowired
 	private PalestraRepository palestraRepository;// repository palestre
+
 	@Autowired
 	private UtenteRepository uR;// repositori utenti
 
@@ -77,7 +80,7 @@ public class ControllerPalestra {
 		}
 
 	}
-	
+
 	// Ricerca per indirizzo palestra
 	@GetMapping(path = "/ricercaIndirizzo")
 	public ResponseEntity<Object> ricercaPerIndirizzo(@RequestParam String indirizzoPalestra) {
@@ -91,8 +94,31 @@ public class ControllerPalestra {
 		} else {// non ho risultati
 			return ResponseHandler.generateResponse("Non ci sono palestre a questo indirizzo:", HttpStatus.BAD_REQUEST,
 					null);
-
 		}
+	}
 
+	// Eliminazione di una palestra
+	@DeleteMapping(path = "/eliminazionePalestra")
+	public ResponseEntity<Object> deleteByIdPalestra(@RequestParam int id) throws AttributeNotFoundException {
+		palestraRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException("Utente non Esiste: " + id));
+
+		palestraRepository.deleteById(id);
+
+		return ResponseHandler.generateResponse("palestra Eliminato", HttpStatus.OK, null);
+	}
+
+	// Modifica di una plestra
+	@PutMapping(path = "/updatePalestra")
+	public ResponseEntity<Object> updatePalestra(@RequestParam int IDPalestra, @RequestParam (required= false) String nomePalestra,
+			@RequestParam (required= false) String indirizzoPalestra, @RequestParam  (required= false) String numeroTelefono, @RequestParam(required= false) String info) throws AttributeNotFoundException {
+		Palestra p = palestraRepository.findById(IDPalestra)
+				.orElseThrow(() -> new AttributeNotFoundException("Id not found for this id :: " + IDPalestra));
+		
+		p.setNomePalestra(nomePalestra);
+		p.setIndirizzoPalestra(indirizzoPalestra);
+		p.setInfo(info);
+		p.setNumeroTelefono(numeroTelefono);
+		
+		return ResponseHandler.generateResponse("Corso aggiornato", HttpStatus.OK, palestraRepository.save(p));
 	}
 }

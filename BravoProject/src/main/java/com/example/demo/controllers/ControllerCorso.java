@@ -19,7 +19,7 @@ import com.example.demo.repository.PalestraRepository;
 import com.example.demo.response.ResponseHandler;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/Corsi") // This means URL's start with /demo (after Application path)
+@RequestMapping(path = "/Corso") // This means URL's start with /demo (after Application path)
 public class ControllerCorso {
 	@Autowired 
 	private CorsoRepository corsoRepository;
@@ -68,7 +68,7 @@ public class ControllerCorso {
 
 	// update dei dati
 	@PutMapping(path = "/update")
-	public ResponseEntity<Object> updateUser(@RequestParam Integer id, @RequestParam(required= false) String nomeCorso, int IDPalestra)
+	public ResponseEntity<Object> updateCorso(@RequestParam Integer id, @RequestParam(required= false) String nomeCorso, int IDPalestra)
 			throws AttributeNotFoundException {
 
 		//creo un oggetto palestra

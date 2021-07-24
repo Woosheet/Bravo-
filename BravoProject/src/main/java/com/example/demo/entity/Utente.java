@@ -26,7 +26,6 @@ import lombok.Setter;
 
 import javax.persistence.JoinColumn;
 
-
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -59,6 +58,7 @@ public class Utente{
 	@OneToMany(targetEntity=UtenteLezione.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "IDUtente", referencedColumnName = "IDUtente")
     private List<UtenteLezione> utenteLezione;
+	
 	
 	public Utente() {
 		

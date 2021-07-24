@@ -1,6 +1,7 @@
 package com.example.demo.security.config;
 
 import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.example.demo.HandleUserDetails.UtenteDetails;
 import com.example.demo.HandleUserDetails.UtenteDetailsService;
 
 import lombok.AllArgsConstructor;
@@ -35,24 +34,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers(
-				"/Palestre/Registration",
-				"/Palestre/add",
-				"/Palestre/all", 
-				"/Corsi/add",
-				"/Corsi/all", 
-				"/Corsi/search/palestra",
-				"/Corsi/update",
-				"/Corsi/search/attivita",
-				"/Corsi/search/date",
-				"/Corsi/search/time",
-				"/Corsi/delete",
-				"/Utenti/add",
-				"/Utenti/all",
-				"/Utenti/searchUserById/{id}",
+				"/Palestra/Registration",
+				"/Palestra/add",
+				"/Palestra/all", 
+				"/Corso/add",
+				"/Corso/all", 
+				"/Corso/search/palestra",
+				"/Corso/update",
+				"/Corso/search/attivita",
+				"/Corso/search/date",
+				"/Corso/search/time",
+				"/Corso/delete",
+				"/Utente/add",
+				"/Utente/all",
+				"/Utente/searchUserById/{id}",
 				"/partecipazione/addPartecipazione",
 				"/partecipazione/deletePartecipazione",
-				"/Abbonamenti/add",
-				"/Utenti/RegistrationProcess"
+				"/Abbonamento/add",
+				"/Utente//registrationProcess"
 				).permitAll().anyRequest()
 				.authenticated().and().formLogin(); 
 	//	http.authorizeRequests().antMatchers("/**").permitAll();

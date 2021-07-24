@@ -13,6 +13,6 @@ public interface UtenteRepository extends JpaRepository<Utente, Integer> {
 	Optional<Utente> findByEmail(String email);
 
 
-	@Query("SELECT u FROM Utenti u WHERE u.email = ?1")
+	@Query(value = "SELECT u FROM Utenti u WHERE u.email = ?1", nativeQuery = true)
 	Utente findEmail (String email);
 }

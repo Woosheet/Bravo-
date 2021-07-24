@@ -24,7 +24,7 @@ import com.example.demo.repository.LezioneRepository;
 import com.example.demo.response.ResponseHandler;
 
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/Lezioni") // This means URL's start with /demo (after Application path)
+@RequestMapping(path = "/Lezione") // This means URL's start with /demo (after Application path)
 public class ControllerLezione {
 	@Autowired
 	private LezioneRepository lezioneRepository;// repository lezioni
