@@ -59,8 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(daoAuthenticationProvider());
-	}
+		auth
+		.inMemoryAuthentication()
+		.withUser("email")
+		.password("password")
+		.roles("USER");
+		}
 
 	@Bean
 	public DaoAuthenticationProvider daoAuthenticationProvider() {
